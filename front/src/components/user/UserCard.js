@@ -1,0 +1,58 @@
+import { useNavigate } from "react-router-dom";
+import { Card, Row, Button, Col } from "react-bootstrap";
+import Like from "../like/Like";
+import { UserStateContext } from "../../App";
+import { useContext } from "react";
+
+function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
+  const navigate = useNavigate();
+  const userState = useContext(UserStateContext);
+  return (
+    <Card className="mb-2 ms-3 mr-5" style={{ width: "18rem" }}>
+      <Card.Body>
+        <Row className="justify-content-md-center">
+          <Card.Img
+            style={{ width: "10rem", height: "8rem" }}
+            className="mb-3"
+            src="https://picsum.photos/200/200"
+            alt="랜덤 사진 (http://picsum.photos API 사용)"
+          />
+        </Row>
+        <Card.Title>
+          {user?.name}
+          <Like portfolioOwnerId={user?.id} user={userState.user?.id} />
+        </Card.Title>
+        <Card.Subtitle className="mb-2 text-muted">{user?.email}</Card.Subtitle>
+        <Card.Text>{user?.description}</Card.Text>
+
+        {isEditable && (
+          <Col>
+            <Row className="mt-3 text-center text-info">
+              <Col sm={{ span: 20 }}>
+                <Button
+                  variant="outline-info"
+                  size="sm"
+                  onClick={() => setIsEditing(true)}
+                >
+                  편집
+                </Button>
+              </Col>
+            </Row>
+          </Col>
+        )}
+
+        {isNetwork && (
+          <Card.Link
+            className="mt-3"
+            href="#"
+            onClick={() => navigate(`/users/${user.id}`)}
+          >
+            포트폴리오
+          </Card.Link>
+        )}
+      </Card.Body>
+    </Card>
+  );
+}
+
+export default UserCard;
