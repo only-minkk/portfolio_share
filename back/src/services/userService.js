@@ -80,37 +80,53 @@ class userAuthService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
-      const errorMessage =
-        "가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
+      const errorMessage = "가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
 
-    // 업데이트 대상에 name이 있다면, 즉 name 값이 null 이 아니라면 업데이트 진행
     if (toUpdate.name) {
-      const fieldToUpdate = "name";
-      const newValue = toUpdate.name;
-      user = await User.update({ user_id, fieldToUpdate, newValue });
+      user.name = toUpdate.name;
     }
-
     if (toUpdate.email) {
-      const fieldToUpdate = "email";
-      const newValue = toUpdate.email;
-      user = await User.update({ user_id, fieldToUpdate, newValue });
+      user.email = toUpdate.email;
     }
-
     if (toUpdate.password) {
-      const fieldToUpdate = "password";
-      const newValue = toUpdate.password;
-      user = await User.update({ user_id, fieldToUpdate, newValue });
+      user.password = toUpdate.password;
     }
-
     if (toUpdate.description) {
-      const fieldToUpdate = "description";
-      const newValue = toUpdate.description;
-      user = await User.update({ user_id, fieldToUpdate, newValue });
+      user.description = toUpdate.description;
     }
 
-    return user;
+    const newUser = await user.save();
+
+    return newUser;
+
+    // 업데이트 대상에 name이 있다면, 즉 name 값이 null 이 아니라면 업데이트 진행
+    // if (toUpdate.name) {
+    //   const fieldToUpdate = "name";
+    //   const newValue = toUpdate.name;
+    //   user = await User.update({ user_id, fieldToUpdate, newValue });
+    // }
+
+    // if (toUpdate.email) {
+    //   const fieldToUpdate = "email";
+    //   const newValue = toUpdate.email;
+    //   user = await User.update({ user_id, fieldToUpdate, newValue });
+    // }
+
+    // if (toUpdate.password) {
+    //   const fieldToUpdate = "password";
+    //   const newValue = toUpdate.password;
+    //   user = await User.update({ user_id, fieldToUpdate, newValue });
+    // }
+
+    // if (toUpdate.description) {
+    //   const fieldToUpdate = "description";
+    //   const newValue = toUpdate.description;
+    //   user = await User.update({ user_id, fieldToUpdate, newValue });
+    // }
+
+    // return user;
   }
 
   static async getUserInfo({ user_id }) {
