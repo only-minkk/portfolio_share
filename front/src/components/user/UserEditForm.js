@@ -13,6 +13,16 @@ function UserEditForm({ user, setIsEditing, setUser }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (
+      name === user.name &&
+      (email === user.email) & (description === user.description)
+    ) {
+      console.log("변경사항 없습니다.");
+      setIsEditing(false);
+
+      return;
+    }
+
     // "users/유저id" 엔드포인트로 PUT 요청함.
     const res = await Api.put(`users/${user.id}`, {
       name,
