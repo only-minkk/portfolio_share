@@ -13,29 +13,39 @@ function UserEditForm({ user, setIsEditing, setUser }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (
-      name === user.name &&
-      (email === user.email) & (description === user.description)
-    ) {
+    const updatedFields = {};
+
+    if (name !== user.name) {
+      updatedFields.name = name;
+    }
+
+    if (email !== user.email) {
+      updatedFields.email = email;
+    }
+
+    if (description !== user.description) {
+      updatedFields.description = description;
+    }
+
+    if (Object.keys(updatedFields).length === 0) {
       console.log("변경사항 없습니다.");
       setIsEditing(false);
-
       return;
     }
 
-    // "users/유저id" 엔드포인트로 PUT 요청함.
-    const res = await Api.put(`users/${user.id}`, {
-      name,
-      email,
-      description,
-    });
-    // 유저 정보는 response의 data임.
-    const updatedUser = res.data;
-    // 해당 유저 정보로 user을 세팅함.
-    setUser(updatedUser);
+    try {
+      // "users/유저id" 엔드포인트로 PUT 요청함.
+      const res = await Api.put(`users/${user.id}`, updatedFields);
+      // 유저 정보는 response의 data임.
+      const updatedUser = res.data;
+      // 해당 유저 정보로 user을 세팅함.
+      setUser(updatedUser);
 
-    // isEditing을 false로 세팅함.
-    setIsEditing(false);
+      // isEditing을 false로 세팅함.
+      setIsEditing(false);
+    } catch (error) {
+      console.log("에러발생:", error);
+    }
   };
 
   return (
