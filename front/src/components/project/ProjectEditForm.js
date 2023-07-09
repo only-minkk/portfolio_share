@@ -13,21 +13,46 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
     e.preventDefault();
     e.stopPropagation();
 
-    const user_id = currentProject.user_id;
-    const from_date = fromDate.toISOString().split("T")[0];
-    const to_date = toDate.toISOString().split("T")[0];
+    // 변경된 필드를 담을 빈 객체 생성
+    const updatedProject = {};
+    function dateFilter(date) {
+      const filtered = date.toISOString().split("T")[0];
+      return filtered;
+    }
 
-    await Api.put(`projects/${currentProject.id}`, {
-      user_id,
-      title,
-      description,
-      from_date,
-      to_date,
-    });
+    if (title !== currentProject.title) {
+      updatedProject.title = title;
+    }
 
-    const res = await Api.get("projects", user_id);
-    setProjects(res.data);
-    setIsEditing(false);
+    if (description !== currentProject.description) {
+      updatedProject.description = description;
+    }
+
+    if ((await dateFilter(fromDate)) !== currentProject.from_date) {
+      updatedProject.from_date = await dateFilter(fromDate);
+    }
+
+    if ((await dateFilter(toDate)) !== currentProject.to_date) {
+      updatedProject.to_date = await dateFilter(toDate);
+    }
+
+    if (Object.keys(updatedProject).length === 0) {
+      console.log("변경사항 없습니다.");
+      setIsEditing(false);
+      return;
+    }
+
+    try {
+      const user_id = currentProject.user_id;
+
+      await Api.put(`projects/${currentProject.id}`, updatedProject);
+
+      const res = await Api.get("projects", user_id);
+      setProjects(res.data);
+      setIsEditing(false);
+    } catch (error) {
+      console.log("에러발생", error);
+    }
   };
 
   return (
