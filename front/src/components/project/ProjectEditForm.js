@@ -15,27 +15,34 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
 
     // 변경된 필드를 담을 빈 객체 생성
     const updatedProject = {};
+
+    // Date를 년-월-일만 남기기위한 함수 생성
     function dateFilter(date) {
       const filtered = date.toISOString().split("T")[0];
       return filtered;
     }
 
+    // 변경된 title 필드 추가
     if (title !== currentProject.title) {
       updatedProject.title = title;
     }
 
+    // 변경된 description 필드 추가
     if (description !== currentProject.description) {
       updatedProject.description = description;
     }
 
+    // 변경된 from_date 필드 추가
     if ((await dateFilter(fromDate)) !== currentProject.from_date) {
       updatedProject.from_date = await dateFilter(fromDate);
     }
 
+    // 변경된 to_date 필드 추가
     if ((await dateFilter(toDate)) !== currentProject.to_date) {
       updatedProject.to_date = await dateFilter(toDate);
     }
 
+    // 변경사항이 없을 경우 API 요청을 보내지 않음.
     if (Object.keys(updatedProject).length === 0) {
       console.log("변경사항 없습니다.");
       setIsEditing(false);
