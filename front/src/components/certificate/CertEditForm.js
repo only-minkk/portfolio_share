@@ -12,19 +12,42 @@ const CertEditForm = ({ currentCert, setCerts, setIsEditing }) => {
     e.preventDefault();
     e.stopPropagation();
 
-    const user_id = currentCert.user_id;
-    const when_date = whenDate.toISOString().split("T")[0];
+    // 변경된 필드를 담을 빈 객체 생성
+    const updatedCert = {};
 
-    await Api.put(`certificates/${currentCert.id}`, {
-      user_id,
-      title,
-      description,
-      when_date,
-    });
+    // 변경된 title 필드 추가
+    if (title !== currentCert.title) {
+      updatedCert.title = title;
+    }
 
-    const res = await Api.get("certificates", user_id);
-    setCerts(res.data);
-    setIsEditing(false);
+    // 변경된 description 필드 추가
+    if (description !== currentCert.description) {
+      updatedCert.description = description;
+    }
+
+    // 변경된 when_date 필드 추가
+    if (whenDate.toISOString().split("T")[0] !== currentCert.when_date) {
+      updatedCert.when_date = whenDate.toISOString().split("T")[0];
+    }
+
+    // 변경된 필드가 없는 경우 API 요청을 보내지 않음.
+    if (Object.keys(updatedCert).length === 0) {
+      console.log("변경사항 없습니다.");
+      setIsEditing(false);
+      return;
+    }
+
+    try {
+      const user_id = currentCert.user_id;
+
+      await Api.put(`certificates/${currentCert.id}`, updatedCert);
+
+      const res = await Api.get("certificates", user_id);
+      setCerts(res.data);
+      setIsEditing(false);
+    } catch (error) {
+      console.log("에러발생", error);
+    }
   };
 
   return (
