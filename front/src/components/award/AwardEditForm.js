@@ -12,22 +12,42 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
     e.preventDefault();
     e.stopPropagation();
 
-    // currentAward의 user_id를 user_id 변수에 할당함.
-    const user_id = currentAward.user_id;
+    // 변경사항을 담을 빈 객체 생성
+    const updatedAward = {};
 
-    // "awards/수상 id" 엔드포인트로 PUT 요청함.
-    await Api.put(`awards/${currentAward.id}`, {
-      user_id,
-      title,
-      description,
-    });
+    // 변경된 title 필드 추가
+    if (title !== currentAward.title) {
+      updatedAward.title = title;
+    }
 
-    // "awardlist/유저id" 엔드포인트로 GET 요청함.
-    const res = await Api.get("awards", user_id);
-    // awards를 response의 data로 세팅함.
-    setAwards(res.data);
-    // 편집 과정이 끝났으므로, isEditing을 false로 세팅함.
-    setIsEditing(false);
+    // 변경된 description 필드 추가
+    if (description !== currentAward.description) {
+      updatedAward.description = description;
+    }
+
+    // 변경된 필드가 없는 경우 API 요청을 보내지 않음.
+    if (Object.keys(updatedAward).length === 0) {
+      console.log("변경사항이 없습니다.");
+      setIsEditing(false);
+      return;
+    }
+
+    try {
+      // currentAward의 user_id를 user_id 변수에 할당함.
+      const user_id = currentAward.user_id;
+
+      // "awards/수상 id" 엔드포인트로 PUT 요청함.
+      await Api.put(`awards/${currentAward.id}`, updatedAward);
+
+      // "awardlist/유저id" 엔드포인트로 GET 요청함.
+      const res = await Api.get("awards", user_id);
+      // awards를 response의 data로 세팅함.
+      setAwards(res.data);
+      // 편집 과정이 끝났으므로, isEditing을 false로 세팅함.
+      setIsEditing(false);
+    } catch (error) {
+      console.log("에러발생", error);
+    }
   };
 
   return (
