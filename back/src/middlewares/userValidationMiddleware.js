@@ -5,7 +5,7 @@ function validate(data, fieldName) {
 }
 
 function validateEmail(email) {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailRegex = /^[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
   if (!emailRegex.test(email)) {
     throw new Error("유효하지 않은 이메일 주소입니다.");
   }
@@ -33,10 +33,11 @@ function validateLoginUser(req, res, next) {
 }
 
 function validateUpdateUser(req, res, next) {
-  const { email } = req.body;
+  if (req.body.email) {
+    const { email } = req.body;
+    validateEmail(email);
 
-  validateEmail(email);
-
-  next();
+    next();
+  }
 }
 export { validateCreateUser, validateLoginUser, validateUpdateUser };
