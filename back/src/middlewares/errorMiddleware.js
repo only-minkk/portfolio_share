@@ -4,10 +4,11 @@ function errorMiddleware(error, req, res, next) {
   res.status(400).send(error.message);
 }
 
+// target 객체에 errorMessage가 있는지 확인해서 있다면 에러로 넘기기.
 const ifErrorMessage = (target) => {
   if (target.errorMessage) {
     throw new Error(target.errorMessage);
   }
 };
 
-export { errorMiddleware, ifErrorMessage};
+export { errorMiddleware, ifErrorMessage };
