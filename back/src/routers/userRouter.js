@@ -3,7 +3,6 @@ import { login_required } from "../middlewares/login_required";
 import {
   validateCreateUser,
   validateLoginUser,
-  validateUpdateUser,
 } from "../middlewares/userValidationMiddleware";
 import { userAuthService } from "../services/userService";
 
@@ -67,19 +66,14 @@ userAuthRouter.get("/user/current", login_required, async (req, res, next) => {
 });
 
 // 유저 정보 수정
-userAuthRouter.put(
-  "/users/:id",
-  login_required,
-  validateUpdateUser,
-  async (req, res, next) => {
-    await userAuthHandler(req, res, next, (req) => {
-      const user_id = req.params.id;
-      const toUpdate = req.body;
-      const updatedUser = userAuthService.setUser({ user_id, toUpdate });
-      return updatedUser;
-    });
-  }
-);
+userAuthRouter.put("/users/:id", login_required, async (req, res, next) => {
+  await userAuthHandler(req, res, next, (req) => {
+    const user_id = req.params.id;
+    const toUpdate = req.body;
+    const updatedUser = userAuthService.setUser({ user_id, toUpdate });
+    return updatedUser;
+  });
+});
 
 // 특정 유저 조회
 userAuthRouter.get("/users/:id", login_required, async (req, res, next) => {

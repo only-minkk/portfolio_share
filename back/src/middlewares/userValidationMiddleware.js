@@ -32,12 +32,4 @@ function validateLoginUser(req, res, next) {
   next();
 }
 
-function validateUpdateUser(req, res, next) {
-  if (req.body.email) {
-    const { email } = req.body;
-    validateEmail(email);
-
-    next();
-  }
-}
-export { validateCreateUser, validateLoginUser, validateUpdateUser };
+export { validateCreateUser, validateLoginUser };
