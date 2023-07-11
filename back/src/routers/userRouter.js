@@ -8,6 +8,7 @@ import { userAuthService } from "../services/userService";
 
 const userAuthRouter = Router();
 
+// 코드 중복을 줄이기 위한 try-catch 핸들러 생성
 const userAuthHandler = async (req, res, next, handler) => {
   try {
     const result = await handler(req);
@@ -22,6 +23,7 @@ userAuthRouter.post(
   "/user/register",
   validateCreateUser,
   async (req, res, next) => {
+    // 람다 함수를 활용하여 역할을 명확하게 하고, 가독성과 유지보수를 용이하게 함.
     await userAuthHandler(req, res, next, (req) => {
       const { name, email, password } = req.body;
 
@@ -59,6 +61,7 @@ userAuthRouter.get("/userlist", login_required, async (req, res, next) => {
 // 접속 유저 조회 (클라이언트에서 로그인한 유저의 기존 토큰을 가져오기위한 라우터)
 userAuthRouter.get("/user/current", login_required, async (req, res, next) => {
   await userAuthHandler(req, res, next, (req) => {
+    // login_required 미들웨어를 통해 토큰에서 userId 추출.
     const user_id = req.currentUserId;
     const currentUserInfo = userAuthService.getUserInfo({ user_id });
     return currentUserInfo;
