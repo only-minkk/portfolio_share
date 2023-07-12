@@ -10,7 +10,7 @@ class userAuthService {
     if (user) {
       const errorMessage =
         "이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.";
-      return { errorMessage };
+      throw new Error(errorMessage);
     }
 
     // 비밀번호 해쉬화
@@ -33,7 +33,7 @@ class userAuthService {
     if (!user) {
       const errorMessage =
         "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
-      return { errorMessage };
+      throw new Error(errorMessage);
     }
 
     // 비밀번호 일치 여부 확인
@@ -45,7 +45,7 @@ class userAuthService {
     if (!isPasswordCorrect) {
       const errorMessage =
         "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.";
-      return { errorMessage };
+      throw new Error(errorMessage);
     }
 
     // 로그인 성공 -> JWT 웹 토큰 생성
@@ -81,32 +81,25 @@ class userAuthService {
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
       const errorMessage = "가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
-      return { errorMessage };
+      throw new Error(errorMessage);
     }
 
-    // 업데이트 대상에 name이 있다면, 즉 name 값이 null 이 아니라면 업데이트 진행
-    if (toUpdate.name) {
-      const fieldToUpdate = "name";
-      const newValue = toUpdate.name;
-      user = await User.update({ user_id, fieldToUpdate, newValue });
+    // 변경 이메일이 이미 존재하는 이메일인지 확인 후, 존재한다면 에러.
+    const email = toUpdate.email;
+    const beingEmailUser = await User.findByEmail({ email });
+    if (beingEmailUser) {
+      const errorMessage =
+        "이미 가입된 이메일입니다. 이메일을 다시 입력해 주세요.";
+      throw new Error(errorMessage);
     }
-
-    if (toUpdate.email) {
-      const fieldToUpdate = "email";
-      const newValue = toUpdate.email;
-      user = await User.update({ user_id, fieldToUpdate, newValue });
-    }
-
-    if (toUpdate.password) {
-      const fieldToUpdate = "password";
-      const newValue = toUpdate.password;
-      user = await User.update({ user_id, fieldToUpdate, newValue });
-    }
-
-    if (toUpdate.description) {
-      const fieldToUpdate = "description";
-      const newValue = toUpdate.description;
-      user = await User.update({ user_id, fieldToUpdate, newValue });
+    // 변경된 필드만 업데이트하며, 변경되지 않은 필드는 무시함. 반복문과 객체 속성 접근을 사용하여 중복 코드 최소화.
+    const fieldToUpdate = ["name", "email", "description"];
+    for (const field of fieldToUpdate) {
+      if (toUpdate[field]) {
+        const newValue = toUpdate[field];
+        console.log(field);
+        user = await User.update({ user_id, fieldToUpdate: field, newValue });
+      }
     }
 
     return user;
@@ -119,7 +112,7 @@ class userAuthService {
     if (!user) {
       const errorMessage =
         "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
-      return { errorMessage };
+      throw new Error(errorMessage);
     }
 
     return user;
