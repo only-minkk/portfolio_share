@@ -97,7 +97,6 @@ class userAuthService {
     for (const field of fieldToUpdate) {
       if (toUpdate[field]) {
         const newValue = toUpdate[field];
-        console.log(field);
         user = await User.update({ user_id, fieldToUpdate: field, newValue });
       }
     }
