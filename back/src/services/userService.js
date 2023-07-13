@@ -94,12 +94,13 @@ class userAuthService {
     }
     // 변경된 필드만 업데이트하며, 변경되지 않은 필드는 무시함. 반복문과 객체 속성 접근을 사용하여 중복 코드 최소화.
     const fieldToUpdate = ["name", "email", "description"];
-    for (const field of fieldToUpdate) {
+
+    fieldToUpdate.forEach((field) => {
       if (toUpdate[field]) {
         const newValue = toUpdate[field];
-        user = await User.update({ user_id, fieldToUpdate: field, newValue });
+        user = User.update({ user_id, fieldToUpdate: field, newValue });
       }
-    }
+    });
 
     return user;
   }
