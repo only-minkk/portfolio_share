@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
 
 class userAuthService {
+  // 유저 등록
   static async addUser({ name, email, password }) {
     // 이메일 중복 확인
     const user = await User.findByEmail({ email });
@@ -27,6 +28,7 @@ class userAuthService {
     return createdNewUser;
   }
 
+  // 로그인
   static async getUser({ email, password }) {
     // 이메일 db에 존재 여부 확인
     const user = await User.findByEmail({ email });
@@ -69,11 +71,27 @@ class userAuthService {
     return loginUser;
   }
 
+  // 유저 조회
+  static async getUserInfo({ user_id }) {
+    const user = await User.findById({ user_id });
+
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!user) {
+      const errorMessage =
+        "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
+      throw new Error(errorMessage);
+    }
+
+    return user;
+  }
+
+  // 모든 유저 조회
   static async getUsers() {
     const users = await User.findAll();
     return users;
   }
 
+  // 유저 정보 수정
   static async setUser({ user_id, toUpdate }) {
     // 우선 해당 id 의 유저가 db에 존재하는지 여부 확인
     let user = await User.findById({ user_id });
@@ -92,28 +110,28 @@ class userAuthService {
         "이미 가입된 이메일입니다. 이메일을 다시 입력해 주세요.";
       throw new Error(errorMessage);
     }
-    // 변경된 필드만 업데이트하며, 변경되지 않은 필드는 무시함. 반복문과 객체 속성 접근을 사용하여 중복 코드 최소화.
-    const fieldToUpdate = ["name", "email", "description"];
 
-    fieldToUpdate.forEach((field) => {
-      if (toUpdate[field]) {
-        const newValue = toUpdate[field];
-        user = User.update({ user_id, fieldToUpdate: field, newValue });
-      }
-    });
+    const fieldToUpdate = [];
 
-    return user;
-  }
-
-  static async getUserInfo({ user_id }) {
-    const user = await User.findById({ user_id });
-
-    // db에서 찾지 못한 경우, 에러 메시지 반환
-    if (!user) {
-      const errorMessage =
-        "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
-      throw new Error(errorMessage);
+    // 변경된 필드의 key값만 추출하여 fieldToUpdate 빈 배열에 push.
+    for (const key in toUpdate) {
+      fieldToUpdate.push(key);
     }
+
+    // 모든 필드가 변경됐을 경우 save()메서드로 한 번에 저장.
+    if (Object.keys(toUpdate).length == 3) {
+      user.name = toUpdate.name;
+      user.email = toUpdate.email;
+      user.description = toUpdate.description;
+      const newUser = await user.save();
+      return newUser;
+    }
+
+    // update()메서드로 변경된 필드만 업데이트.
+    fieldToUpdate.forEach((field) => {
+      const newValue = toUpdate[field];
+      user = User.update({ user_id, fieldToUpdate: field, newValue });
+    });
 
     return user;
   }
