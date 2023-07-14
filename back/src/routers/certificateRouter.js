@@ -1,72 +1,57 @@
-import is from "@sindresorhus/is";
 import { Router } from "express";
+import { certificateValidate } from "../middlewares/certificateValidation";
+import { tryCatchAsycHandler } from "../middlewares/tryCatchAsycHandler";
 import { certificateService } from "../services/certificateService";
-import { ifErrorMessage } from "../middlewares/errorMiddleware";
 
 const certificateRouter = Router();
 
 // 자격증 정보 추가
-certificateRouter.post("/certificate", async (req, res, next) => {
-  try {
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
-    }
-    const toUpdate = req.body;
-
-    const newCertificate = await certificateService.addCertificate(toUpdate);
-
-    ifErrorMessage(newCertificate);
-    res.status(201).json(newCertificate);
-  } catch (error) {
-    next(error);
+certificateRouter.post(
+  "/certificate",
+  certificateValidate,
+  async (req, res, next) => {
+    await tryCatchAsycHandler(req, res, next, (req) => {
+      const { user_id, title, description, when_date } = req.body;
+      const newCertificate = certificateService.addCertificate({
+        user_id,
+        title,
+        description,
+        when_date,
+      });
+      return newCertificate;
+    });
   }
-});
+);
 
 // 자격증 정보 조회
 certificateRouter.get("/certificates/:id", async (req, res, next) => {
-  try {
+  await tryCatchAsycHandler(req, res, next, (req) => {
     const user_id = req.params.id;
-    const certificates = await certificateService.getCertificates({ user_id });
-
-    ifErrorMessage(certificates);
-    res.status(200).send(certificates);
-  } catch (error) {
-    next(error);
-  }
+    const certificates = certificateService.getCertificates({ user_id });
+    return certificates;
+  });
 });
 
 // 자격증 정보 수정
 certificateRouter.put("/certificates/:id", async (req, res, next) => {
-  try {
+  await tryCatchAsycHandler(req, res, next, (req) => {
     const id = req.params.id;
-    const { title, description, when_date } = req.body;
-
-    const toUpdate = { title, description, when_date };
-    const updatedCertificate = await certificateService.setCertificate({
+    const toUpdate = req.body;
+    const updatedCertificate = certificateService.setCertificate({
       id,
       toUpdate,
     });
-
-    ifErrorMessage(updatedCertificate);
-    res.status(200).json(updatedCertificate);
-  } catch (error) {
-    next(error);
-  }
+    return updatedCertificate;
+  });
 });
 
 // 자격증 정보 삭제
 certificateRouter.delete("/certificates/:id", async (req, res, next) => {
-  try {
+  await tryCatchAsycHandler(req, res, next, (req) => {
     const id = req.params.id;
-    const certificates = await certificateService.deleteCertificate({ id });
-
-    ifErrorMessage(certificates);
-    res.send("삭제가 완료되었습니다.");
-  } catch (error) {
-    next(error);
-  }
+    const deletedCertificate = certificateService.deleteCertificate({ id });
+    return deletedCertificate;
+  });
 });
 
 export { certificateRouter };
