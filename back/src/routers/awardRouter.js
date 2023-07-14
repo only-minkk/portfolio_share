@@ -1,13 +1,13 @@
 import { Router } from "express";
 import { awardValidate } from "../middlewares/awardValidationMiddleware";
-import { tryCatchAsycHandler } from "../middlewares/tryCatchAsycHandler";
+import { tryCatchAsyncHandler } from "../middlewares/tryCatchAsyncHandler";
 import { awardService } from "../services/awardService";
 
 const awardRouter = Router();
 
 // 수상 내역 추가
 awardRouter.post("/award", awardValidate, async (req, res, next) => {
-  await tryCatchAsycHandler(req, res, next, (req) => {
+  await tryCatchAsyncHandler(req, res, next, (req) => {
     const { user_id, title, description } = req.body;
     const newAward = awardService.addAward({ user_id, title, description });
     return newAward;
@@ -16,7 +16,7 @@ awardRouter.post("/award", awardValidate, async (req, res, next) => {
 
 // 수상 내역 수정
 awardRouter.put("/awards/:id", async (req, res, next) => {
-  await tryCatchAsycHandler(req, res, next, (req) => {
+  await tryCatchAsyncHandler(req, res, next, (req) => {
     const id = req.params.id;
     const toUpdate = req.body;
     const updatedAward = awardService.setAward({ id, toUpdate });
@@ -26,7 +26,7 @@ awardRouter.put("/awards/:id", async (req, res, next) => {
 
 // 수상 내역 조회
 awardRouter.get("/awards/:id", async (req, res, next) => {
-  await tryCatchAsycHandler(req, res, next, (req) => {
+  await tryCatchAsyncHandler(req, res, next, (req) => {
     const user_id = req.params.id;
     const awards = awardService.getAwards({ user_id });
     return awards;
@@ -35,7 +35,7 @@ awardRouter.get("/awards/:id", async (req, res, next) => {
 
 // 수상 내역 삭제
 awardRouter.delete("/awards/:id", async (req, res, next) => {
-  await tryCatchAsycHandler(req, res, next, (req) => {
+  await tryCatchAsyncHandler(req, res, next, (req) => {
     const id = req.params.id;
     const deletedAward = awardService.deleteAward({ id });
     return deletedAward;

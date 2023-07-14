@@ -1,35 +1,30 @@
-import is from "@sindresorhus/is";
 import { Router } from "express";
+import { tryCatchAsyncHandler } from "../middlewares/tryCatchAsyncHandler";
 import { educationService } from "../services/educationService";
-import { ifErrorMessage } from "../middlewares/errorMiddleware";
 
 const educationRouter = Router();
 
 // 학력 정보 추가
 educationRouter.post("/education", async (req, res, next) => {
-  try {
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
-    }
-    const user_id = req.body.user_id;
-    const school = req.body.school;
-    const major = req.body.major;
-    const position = req.body.position;
+  await tryCatchAsyncHandler;
+  // try {
+  //   const user_id = req.body.user_id;
+  //   const school = req.body.school;
+  //   const major = req.body.major;
+  //   const position = req.body.position;
 
-    const newEducation = await educationService.addEducation({
-      user_id,
-      school,
-      major,
-      position,
-    });
+  //   const newEducation = await educationService.addEducation({
+  //     user_id,
+  //     school,
+  //     major,
+  //     position,
+  //   });
 
-    ifErrorMessage(newEducation);
-    res.status(201).json(newEducation);
-  } catch (error) {
-    next(error);
-  }
+  //   ifErrorMessage(newEducation);
+  //   res.status(201).json(newEducation);
+  // } catch (error) {
+  //   next(error);
+  // }
 });
 
 // 학력 정보 수정
