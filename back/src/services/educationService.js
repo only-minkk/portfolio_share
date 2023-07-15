@@ -2,6 +2,7 @@ import { Education } from "../db";
 import { v4 as uuidv4 } from "uuid";
 
 class educationService {
+  // 학력 추가
   static async addEducation({ user_id, school, major, position }) {
     // id 는 유니크 값 부여
     const id = uuidv4();
@@ -15,6 +16,13 @@ class educationService {
     return createdNewEducation;
   }
 
+  // 학력 조회
+  static async getEducations({ user_id }) {
+    const educations = await Education.findByUserId({ user_id });
+    return educations;
+  }
+
+  // 학력 수정
   static async setEducation({ id, toUpdate }) {
     // 우선 해당 id 의 유저가 db에 존재하는지 여부 확인
     let education = await Education.findById({ id });
@@ -25,32 +33,32 @@ class educationService {
       return { errorMessage };
     }
 
-    if (toUpdate.school) {
-      const fieldToUpdate = "school";
-      const newValue = toUpdate.school;
-      education = await Education.update({ id, fieldToUpdate, newValue });
+    // 모든 필드가 변경됐을 경우 save() 메서드로 한 번에 저장.
+    if (Object.keys(toUpdate).length === 3) {
+      education.school = toUpdate.school;
+      education.major = toUpdate.major;
+      education.position = toUpdate.position;
+      const newEducation = await education.save();
+      return newEducation;
     }
 
-    if (toUpdate.major) {
-      const fieldToUpdate = "major";
-      const newValue = toUpdate.major;
-      education = await Education.update({ id, fieldToUpdate, newValue });
+    const fieldToUpdate = [];
+
+    // 변경된 필드의 key 값만 추출하여 fieldToUpdate 빈 배열에 push.
+    for (const key in toUpdate) {
+      fieldToUpdate.push(key);
     }
 
-    if (toUpdate.position) {
-      const fieldToUpdate = "position";
-      const newValue = toUpdate.position;
-      education = await Education.update({ id, fieldToUpdate, newValue });
-    }
+    // update() 메서드로 변경된 필드만 업데이트.
+    fieldToUpdate.forEach((field) => {
+      const newValue = toUpdate[field];
+      education = Education.update({ id, fieldToUpdate: field, newValue });
+    });
 
     return education;
   }
 
-  static async getEducations({ user_id }) {
-    const educations = await Education.findByUserId({ user_id });
-    return educations;
-  }
-
+  // 학력 삭제
   static async deleteEducation({ id }) {
     let educations = await Education.findById({ id });
     if (!educations) {
