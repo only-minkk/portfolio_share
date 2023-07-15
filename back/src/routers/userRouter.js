@@ -3,7 +3,7 @@ import { login_required } from "../middlewares/login_required";
 import {
   validateCreateUser,
   validateLoginUser,
-} from "../middlewares/userValidationMiddleware";
+} from "../middlewares/userValidation";
 import { tryCatchAsyncHandler } from "../middlewares/tryCatchAsyncHandler";
 import { userAuthService } from "../services/userService";
 

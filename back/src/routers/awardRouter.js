@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { awardValidate } from "../middlewares/awardValidationMiddleware";
+import { awardValidate } from "../middlewares/awardValidation";
 import { tryCatchAsyncHandler } from "../middlewares/tryCatchAsyncHandler";
 import { awardService } from "../services/awardService";
 
