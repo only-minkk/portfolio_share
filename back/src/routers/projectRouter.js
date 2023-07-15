@@ -1,70 +1,51 @@
-import is from "@sindresorhus/is";
 import { Router } from "express";
+import { tryCatchAsyncHandler } from "../middlewares/tryCatchAsyncHandler";
+import { projectValidate } from "../middlewares/projectValidation";
 import { projectService } from "../services/projectService";
-import { ifErrorMessage } from "../middlewares/errorMiddleware";
 
 const projectRouter = Router();
 
 // 프로젝트 정보 추가
-projectRouter.post("/project", async (req, res, next) => {
-  try {
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
-    }
-    const toUpdate = req.body;
-
-    const newProject = await projectService.addProject(toUpdate);
-
-    ifErrorMessage(newProject);
-    res.status(201).json(newProject);
-  } catch (error) {
-    next(error);
-  }
+projectRouter.post("/project", projectValidate, async (req, res, next) => {
+  await tryCatchAsyncHandler(req, res, next, (req) => {
+    const { user_id, title, description, from_date, to_date } = req.body;
+    const newProject = projectService.addProject({
+      user_id,
+      title,
+      description,
+      from_date,
+      to_date,
+    });
+    return newProject;
+  });
 });
 
 // 프로젝트 정보 조회
 projectRouter.get("/projects/:id", async (req, res, next) => {
-  try {
+  await tryCatchAsyncHandler(req, res, next, (req) => {
     const user_id = req.params.id;
-
-    const projects = await projectService.getProjects({ user_id });
-
-    ifErrorMessage(projects);
-    res.status(200).send(projects);
-  } catch (error) {
-    next(error);
-  }
+    const projects = projectService.getProjects({ user_id });
+    return projects;
+  });
 });
 
 // 프로젝트 정보 수정
 projectRouter.put("/projects/:id", async (req, res, next) => {
-  try {
+  await tryCatchAsyncHandler(req, res, next, (req) => {
     const id = req.params.id;
-    const { title, description, from_date, to_date } = req.body;
-
-    const toUpdate = { title, description, from_date, to_date };
-    const updatedProject = await projectService.setProject({ id, toUpdate });
-
-    ifErrorMessage(updatedProject);
-    res.status(200).json(updatedProject);
-  } catch (error) {
-    next(error);
-  }
+    const toUpdate = req.body;
+    const updatedProject = projectService.setProject({ id, toUpdate });
+    return updatedProject;
+  });
 });
 
 // 프로젝트 정보 삭제
 projectRouter.delete("/projects/:id", async (req, res, next) => {
-  try {
+  await tryCatchAsyncHandler(req, res, next, (req) => {
     const id = req.params.id;
-    const deletedProject = await projectService.deleteProject({ id });
-
-    ifErrorMessage(deletedProject);
-    res.send("삭제가 완료되었습니다.");
-  } catch (error) {
-    next(error);
-  }
+    const deletedProject = projectService.deleteProject({ id });
+    return deletedProject;
+  });
 });
 
 export { projectRouter };
