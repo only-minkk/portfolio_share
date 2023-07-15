@@ -32,13 +32,6 @@ class certificateService {
       return { errorMessage };
     }
 
-    const fieldToUpdate = [];
-
-    // 변경된 필드의 key 값만 추출하여 fieldToUpdate 빈 배열에 push
-    for (const key in toUpdate) {
-      fieldToUpdate.push(key);
-    }
-
     // 모든 필드가 변경됐을 경우 save() 메서드로 한 번에 저장.
     if (Object.keys(toUpdate).length === 3) {
       certificate.title = toUpdate.title;
@@ -46,6 +39,13 @@ class certificateService {
       certificate.when_date = toUpdate.when_date;
       const newCertificate = await certificate.save();
       return newCertificate;
+    }
+
+    const fieldToUpdate = [];
+
+    // 변경된 필드의 key 값만 추출하여 fieldToUpdate 빈 배열에 push
+    for (const key in toUpdate) {
+      fieldToUpdate.push(key);
     }
 
     // 변경된 필드만 update() 메서드로 업데이트
