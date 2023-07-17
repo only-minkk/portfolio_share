@@ -52,8 +52,9 @@ class certificateService {
     fieldToUpdate.forEach((field) => {
       const newValue = toUpdate[field];
       certificate = Certificate.update({ id, fieldToUpdate: field, newValue });
-      return certificate;
     });
+
+    return certificate;
   }
 
   // 자격증 삭제.
