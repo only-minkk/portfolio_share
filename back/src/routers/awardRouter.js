@@ -1,5 +1,8 @@
 import { Router } from "express";
-import { awardValidate } from "../middlewares/awardValidation";
+import {
+  awardValidate,
+  awardUpdateValidate,
+} from "../middlewares/awardValidation";
 import { tryCatchAsyncHandler } from "../middlewares/tryCatchAsyncHandler";
 import { awardService } from "../services/awardService";
 
@@ -14,22 +17,22 @@ awardRouter.post("/award", awardValidate, async (req, res, next) => {
   });
 });
 
-// 수상 내역 수정
-awardRouter.put("/awards/:id", async (req, res, next) => {
-  await tryCatchAsyncHandler(req, res, next, (req) => {
-    const id = req.params.id;
-    const toUpdate = req.body;
-    const updatedAward = awardService.setAward({ id, toUpdate });
-    return updatedAward;
-  });
-});
-
 // 수상 내역 조회
 awardRouter.get("/awards/:id", async (req, res, next) => {
   await tryCatchAsyncHandler(req, res, next, (req) => {
     const user_id = req.params.id;
     const awards = awardService.getAwards({ user_id });
     return awards;
+  });
+});
+
+// 수상 내역 수정
+awardRouter.put("/awards/:id", awardUpdateValidate, async (req, res, next) => {
+  await tryCatchAsyncHandler(req, res, next, (req) => {
+    const id = req.params.id;
+    const toUpdate = req.body;
+    const updatedAward = awardService.setAward({ id, toUpdate });
+    return updatedAward;
   });
 });
 

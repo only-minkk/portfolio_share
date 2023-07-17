@@ -1,5 +1,8 @@
 import { Router } from "express";
-import { certificateValidate } from "../middlewares/certificateValidation";
+import {
+  certificateValidate,
+  certificateUpdateValidate,
+} from "../middlewares/certificateValidation";
 import { tryCatchAsyncHandler } from "../middlewares/tryCatchAsyncHandler";
 import { certificateService } from "../services/certificateService";
 
@@ -33,17 +36,21 @@ certificateRouter.get("/certificates/:id", async (req, res, next) => {
 });
 
 // 자격증 정보 수정
-certificateRouter.put("/certificates/:id", async (req, res, next) => {
-  await tryCatchAsyncHandler(req, res, next, (req) => {
-    const id = req.params.id;
-    const toUpdate = req.body;
-    const updatedCertificate = certificateService.setCertificate({
-      id,
-      toUpdate,
+certificateRouter.put(
+  "/certificates/:id",
+  certificateUpdateValidate,
+  async (req, res, next) => {
+    await tryCatchAsyncHandler(req, res, next, (req) => {
+      const id = req.params.id;
+      const toUpdate = req.body;
+      const updatedCertificate = certificateService.setCertificate({
+        id,
+        toUpdate,
+      });
+      return updatedCertificate;
     });
-    return updatedCertificate;
-  });
-});
+  }
+);
 
 // 자격증 정보 삭제
 certificateRouter.delete("/certificates/:id", async (req, res, next) => {

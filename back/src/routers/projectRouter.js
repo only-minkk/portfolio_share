@@ -1,6 +1,9 @@
 import { Router } from "express";
+import {
+  projectValidate,
+  projectUpdateValidate,
+} from "../middlewares/projectValidation";
 import { tryCatchAsyncHandler } from "../middlewares/tryCatchAsyncHandler";
-import { projectValidate } from "../middlewares/projectValidation";
 import { projectService } from "../services/projectService";
 
 const projectRouter = Router();
@@ -30,14 +33,18 @@ projectRouter.get("/projects/:id", async (req, res, next) => {
 });
 
 // 프로젝트 정보 수정
-projectRouter.put("/projects/:id", async (req, res, next) => {
-  await tryCatchAsyncHandler(req, res, next, (req) => {
-    const id = req.params.id;
-    const toUpdate = req.body;
-    const updatedProject = projectService.setProject({ id, toUpdate });
-    return updatedProject;
-  });
-});
+projectRouter.put(
+  "/projects/:id",
+  projectUpdateValidate,
+  async (req, res, next) => {
+    await tryCatchAsyncHandler(req, res, next, (req) => {
+      const id = req.params.id;
+      const toUpdate = req.body;
+      const updatedProject = projectService.setProject({ id, toUpdate });
+      return updatedProject;
+    });
+  }
+);
 
 // 프로젝트 정보 삭제
 projectRouter.delete("/projects/:id", async (req, res, next) => {

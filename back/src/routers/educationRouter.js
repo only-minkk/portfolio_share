@@ -1,6 +1,9 @@
 import { Router } from "express";
+import {
+  educationValidate,
+  educationUpdateValidate,
+} from "../middlewares/educationValidation";
 import { tryCatchAsyncHandler } from "../middlewares/tryCatchAsyncHandler";
-import { educationValidate } from "../middlewares/educationValidation";
 import { educationService } from "../services/educationService";
 
 const educationRouter = Router();
@@ -23,19 +26,6 @@ educationRouter.post(
   }
 );
 
-// 학력 정보 수정
-educationRouter.put("/educations/:id", async (req, res, next) => {
-  await tryCatchAsyncHandler(req, res, next, (req) => {
-    const id = req.params.id;
-    const toUpdate = req.body;
-    const updatedEducation = educationService.setEducation({
-      id,
-      toUpdate,
-    });
-    return updatedEducation;
-  });
-});
-
 // 학력 정보 조회
 educationRouter.get("/educations/:id", async (req, res, next) => {
   await tryCatchAsyncHandler(req, res, next, (req) => {
@@ -44,6 +34,23 @@ educationRouter.get("/educations/:id", async (req, res, next) => {
     return educations;
   });
 });
+
+// 학력 정보 수정
+educationRouter.put(
+  "/educations/:id",
+  educationUpdateValidate,
+  async (req, res, next) => {
+    await tryCatchAsyncHandler(req, res, next, (req) => {
+      const id = req.params.id;
+      const toUpdate = req.body;
+      const updatedEducation = educationService.setEducation({
+        id,
+        toUpdate,
+      });
+      return updatedEducation;
+    });
+  }
+);
 
 // 학력 정보 삭제
 educationRouter.delete("/educations/:id", async (req, res, next) => {
