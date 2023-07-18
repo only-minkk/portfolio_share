@@ -10,9 +10,9 @@ const projectRouter = Router();
 
 // 프로젝트 정보 추가
 projectRouter.post("/project", projectValidate, async (req, res, next) => {
-  await tryCatchAsyncHandler(req, res, next, (req) => {
+  await tryCatchAsyncHandler(req, res, next, async (req) => {
     const { user_id, title, description, from_date, to_date } = req.body;
-    const newProject = projectService.addProject({
+    const newProject = await projectService.addProject({
       user_id,
       title,
       description,
@@ -25,9 +25,9 @@ projectRouter.post("/project", projectValidate, async (req, res, next) => {
 
 // 프로젝트 정보 조회
 projectRouter.get("/projects/:id", async (req, res, next) => {
-  await tryCatchAsyncHandler(req, res, next, (req) => {
+  await tryCatchAsyncHandler(req, res, next, async (req) => {
     const user_id = req.params.id;
-    const projects = projectService.getProjects({ user_id });
+    const projects = await projectService.getProjects({ user_id });
     return projects;
   });
 });
@@ -37,10 +37,10 @@ projectRouter.put(
   "/projects/:id",
   projectUpdateValidate,
   async (req, res, next) => {
-    await tryCatchAsyncHandler(req, res, next, (req) => {
+    await tryCatchAsyncHandler(req, res, next, async (req) => {
       const id = req.params.id;
       const toUpdate = req.body;
-      const updatedProject = projectService.setProject({ id, toUpdate });
+      const updatedProject = await projectService.setProject({ id, toUpdate });
       return updatedProject;
     });
   }
@@ -48,9 +48,9 @@ projectRouter.put(
 
 // 프로젝트 정보 삭제
 projectRouter.delete("/projects/:id", async (req, res, next) => {
-  await tryCatchAsyncHandler(req, res, next, (req) => {
+  await tryCatchAsyncHandler(req, res, next, async (req) => {
     const id = req.params.id;
-    const deletedProject = projectService.deleteProject({ id });
+    const deletedProject = await projectService.deleteProject({ id });
     return deletedProject;
   });
 });
