@@ -13,9 +13,9 @@ educationRouter.post(
   "/education",
   educationValidate,
   async (req, res, next) => {
-    await tryCatchAsyncHandler(req, res, next, (req) => {
+    await tryCatchAsyncHandler(req, res, next, async (req) => {
       const { user_id, school, major, position } = req.body;
-      const newEducation = educationService.addEducation({
+      const newEducation = await educationService.addEducation({
         user_id,
         school,
         major,
@@ -28,9 +28,9 @@ educationRouter.post(
 
 // 학력 정보 조회
 educationRouter.get("/educations/:id", async (req, res, next) => {
-  await tryCatchAsyncHandler(req, res, next, (req) => {
+  await tryCatchAsyncHandler(req, res, next, async (req) => {
     const user_id = req.params.id;
-    const educations = educationService.getEducations({ user_id });
+    const educations = await educationService.getEducations({ user_id });
     return educations;
   });
 });
@@ -40,10 +40,10 @@ educationRouter.put(
   "/educations/:id",
   educationUpdateValidate,
   async (req, res, next) => {
-    await tryCatchAsyncHandler(req, res, next, (req) => {
+    await tryCatchAsyncHandler(req, res, next, async (req) => {
       const id = req.params.id;
       const toUpdate = req.body;
-      const updatedEducation = educationService.setEducation({
+      const updatedEducation = await educationService.setEducation({
         id,
         toUpdate,
       });
@@ -54,9 +54,9 @@ educationRouter.put(
 
 // 학력 정보 삭제
 educationRouter.delete("/educations/:id", async (req, res, next) => {
-  await tryCatchAsyncHandler(req, res, next, (req) => {
+  await tryCatchAsyncHandler(req, res, next, async (req) => {
     const id = req.params.id;
-    const deletedEducation = educationService.deleteEducation({ id });
+    const deletedEducation = await educationService.deleteEducation({ id });
     return deletedEducation;
   });
 });

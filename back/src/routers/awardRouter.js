@@ -10,37 +10,41 @@ const awardRouter = Router();
 
 // 수상 내역 추가
 awardRouter.post("/award", awardValidate, async (req, res, next) => {
-  await tryCatchAsyncHandler(req, res, next, (req) => {
+  await tryCatchAsyncHandler(req, res, next, async (req) => {
     const { user_id, title, description } = req.body;
-    const newAward = awardService.addAward({ user_id, title, description });
+    const newAward = await awardService.addAward({
+      user_id,
+      title,
+      description,
+    });
     return newAward;
   });
 });
 
 // 수상 내역 조회
 awardRouter.get("/awards/:id", async (req, res, next) => {
-  await tryCatchAsyncHandler(req, res, next, (req) => {
+  await tryCatchAsyncHandler(req, res, next, async (req) => {
     const user_id = req.params.id;
-    const awards = awardService.getAwards({ user_id });
+    const awards = await awardService.getAwards({ user_id });
     return awards;
   });
 });
 
 // 수상 내역 수정
 awardRouter.put("/awards/:id", awardUpdateValidate, async (req, res, next) => {
-  await tryCatchAsyncHandler(req, res, next, (req) => {
+  await tryCatchAsyncHandler(req, res, next, async (req) => {
     const id = req.params.id;
     const toUpdate = req.body;
-    const updatedAward = awardService.setAward({ id, toUpdate });
+    const updatedAward = await awardService.setAward({ id, toUpdate });
     return updatedAward;
   });
 });
 
 // 수상 내역 삭제
 awardRouter.delete("/awards/:id", async (req, res, next) => {
-  await tryCatchAsyncHandler(req, res, next, (req) => {
+  await tryCatchAsyncHandler(req, res, next, async (req) => {
     const id = req.params.id;
-    const deletedAward = awardService.deleteAward({ id });
+    const deletedAward = await awardService.deleteAward({ id });
     return deletedAward;
   });
 });

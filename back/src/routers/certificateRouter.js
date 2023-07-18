@@ -13,9 +13,9 @@ certificateRouter.post(
   "/certificate",
   certificateValidate,
   async (req, res, next) => {
-    await tryCatchAsyncHandler(req, res, next, (req) => {
+    await tryCatchAsyncHandler(req, res, next, async (req) => {
       const { user_id, title, description, when_date } = req.body;
-      const newCertificate = certificateService.addCertificate({
+      const newCertificate = await certificateService.addCertificate({
         user_id,
         title,
         description,
@@ -28,9 +28,9 @@ certificateRouter.post(
 
 // 자격증 정보 조회
 certificateRouter.get("/certificates/:id", async (req, res, next) => {
-  await tryCatchAsyncHandler(req, res, next, (req) => {
+  await tryCatchAsyncHandler(req, res, next, async (req) => {
     const user_id = req.params.id;
-    const certificates = certificateService.getCertificates({ user_id });
+    const certificates = await certificateService.getCertificates({ user_id });
     return certificates;
   });
 });
@@ -40,10 +40,10 @@ certificateRouter.put(
   "/certificates/:id",
   certificateUpdateValidate,
   async (req, res, next) => {
-    await tryCatchAsyncHandler(req, res, next, (req) => {
+    await tryCatchAsyncHandler(req, res, next, async (req) => {
       const id = req.params.id;
       const toUpdate = req.body;
-      const updatedCertificate = certificateService.setCertificate({
+      const updatedCertificate = await certificateService.setCertificate({
         id,
         toUpdate,
       });
@@ -54,9 +54,11 @@ certificateRouter.put(
 
 // 자격증 정보 삭제
 certificateRouter.delete("/certificates/:id", async (req, res, next) => {
-  await tryCatchAsyncHandler(req, res, next, (req) => {
+  await tryCatchAsyncHandler(req, res, next, async (req) => {
     const id = req.params.id;
-    const deletedCertificate = certificateService.deleteCertificate({ id });
+    const deletedCertificate = await certificateService.deleteCertificate({
+      id,
+    });
     return deletedCertificate;
   });
 });
