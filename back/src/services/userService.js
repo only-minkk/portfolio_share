@@ -32,7 +32,7 @@ class userAuthService {
     // 이메일 db에 존재 여부 확인
     const user = await User.findByEmail({ email });
     if (!user) {
-      throw new NoneUser(error);
+      throw new NoneUser();
     }
 
     // 비밀번호 일치 여부 확인
