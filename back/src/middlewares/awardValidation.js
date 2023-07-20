@@ -1,6 +1,8 @@
+import { ValidationError } from "./CustomError";
+
 function validate(data, fieldName) {
   if (!data) {
-    throw new Error(`${fieldName} 값을 입력해 주세요.`);
+    throw new ValidationError(`${field} 값을 입력해 주세요.`);
   }
 }
 
@@ -23,7 +25,7 @@ function awardUpdateValidate(req, res, next) {
   //변경된 필드의 값만 유효성 검사. 값이 비어있을 경우 에러.
   fieldToUpdate.forEach((field) => {
     if (req.body[field] === "") {
-      throw new Error(`${field} 값을 입력해 주세요.`);
+      throw new ValidationError(`${field} 값을 입력해 주세요.`);
     }
   });
   next();

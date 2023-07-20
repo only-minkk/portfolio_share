@@ -1,5 +1,6 @@
 import { Award } from "../db";
 import { v4 as uuidv4 } from "uuid";
+import { NotFound } from "../middlewares/CustomError";
 
 class awardService {
   // 수상 내역 등록
@@ -29,8 +30,7 @@ class awardService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!award) {
-      const errorMessage = "내역이 없습니다. 다시 한 번 확인해 주세요.";
-      return { errorMessage };
+      throw new NotFound();
     }
 
     // 모든 필드가 변경됐을 경우 save() 메서드로 한 번에 저장.
@@ -62,8 +62,7 @@ class awardService {
     let awards = await Award.findById({ id });
 
     if (!awards) {
-      const errorMessage = "내역이 없습니다. 다시 한 번 확인해 주세요.";
-      return { errorMessage };
+      throw new NotFound();
     }
     awards = await Award.deleteById({ id });
 

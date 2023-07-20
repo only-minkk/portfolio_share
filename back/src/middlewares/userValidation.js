@@ -1,13 +1,13 @@
-function validate(data, fieldName) {
+function validate(data, field) {
   if (!data) {
-    throw new Error(`${fieldName} 값을 입력해 주세요.`);
+    throw new ValidationError(`${field} 값을 입력해 주세요.`);
   }
 }
 
 function validateEmail(email) {
   const emailRegex = /^[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
   if (!emailRegex.test(email)) {
-    throw new Error("유효하지 않은 이메일 주소입니다.");
+    throw new ValidationError("유효하지 않은 이메일 형식입니다.");
   }
 }
 
@@ -43,7 +43,7 @@ function userUpdateValidation(req, res, next) {
   //변경된 필드의 값만 유효성 검사. 값이 비어있을 경우 에러.
   fieldToUpdate.forEach((field) => {
     if (req.body[field] === "") {
-      throw new Error(`${field} 값을 입력해 주세요.`);
+      throw new ValidationError(`${field} 값을 입력해 주세요.`);
     }
   });
 

@@ -1,5 +1,6 @@
 import { Certificate } from "../db";
 import { v4 as uuidv4 } from "uuid";
+import { NotFound } from "../middlewares/CustomError";
 
 class certificateService {
   // 자격증 추가
@@ -28,8 +29,7 @@ class certificateService {
     let certificate = await Certificate.findById({ id });
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!certificate) {
-      const errorMessage = "내역이 없습니다. 다시 한 번 확인해 주세요.";
-      return { errorMessage };
+      throw new NotFound();
     }
 
     // 모든 필드가 변경됐을 경우 save() 메서드로 한 번에 저장.
@@ -61,8 +61,7 @@ class certificateService {
   static async deleteCertificate({ id }) {
     let certificates = await Certificate.findById({ id });
     if (!certificates) {
-      const errorMessage = "내역이 없습니다. 다시 한 번 확인해 주세요.";
-      return { errorMessage };
+      throw new NotFound();
     }
     certificates = await Certificate.deleteById({ id });
     return certificates;

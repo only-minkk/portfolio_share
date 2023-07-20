@@ -25,8 +25,7 @@ class projectService {
     let project = await Project.findById({ id });
 
     if (!project) {
-      const errorMessage = "내역이 없습니다. 다시 한 번 확인해 주세요.";
-      return { errorMessage };
+      throw new NotFound();
     }
 
     // 모든 필드가 변경됐을 경우 save() 메서드로 한 번에 저장.
@@ -56,8 +55,7 @@ class projectService {
   static async deleteProject({ id }) {
     let projects = await Project.findById({ id });
     if (!projects) {
-      const errorMessage = "내역이 없습니다. 다시 한 번 확인해 주세요.";
-      return { errorMessage };
+      throw new NotFound();
     }
     projects = await Project.deleteById({ id });
 
