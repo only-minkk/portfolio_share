@@ -9,8 +9,6 @@ const tryCatchAsyncHandler = (handler) => {
       } else if (req.method === "PUT" || req.method === "DELETE") {
         statusCode = 204; // No Content
       }
-      console.log(result);
-
       res.status(statusCode).json(result);
     } catch (error) {
       next(error);
