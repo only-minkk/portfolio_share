@@ -1,6 +1,6 @@
 import { ValidationError } from "./CustomError";
 
-function validate(data, fieldName) {
+function validate(data, field) {
   if (!data) {
     throw new ValidationError(`${field} 값을 입력해 주세요.`);
   }

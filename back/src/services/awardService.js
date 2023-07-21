@@ -25,7 +25,7 @@ class awardService {
 
   // 수상 내역 수정
   static async setAward({ id, toUpdate }) {
-    // 우선 해당 id 의 유저가 db에 존재하는지 여부 확인
+    // 우선 해당 id 의 award가 db에 존재하는지 여부 확인
     let award = await Award.findById({ id });
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
