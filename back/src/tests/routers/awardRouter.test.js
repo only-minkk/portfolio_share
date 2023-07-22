@@ -1,26 +1,20 @@
 const request = require("supertest");
 const { app } = require("../../app"); // Express 애플리케이션의 app 객체 가져오기
-const { awardService } = require("../../services/awardService");
 const mongoose = require("mongoose");
 
-describe("Award Router 테스트", () => {
+describe("awardRouter 테스트", () => {
   // 테스트 시작 전에 수행되는 부분
   let userId = "b0deebdf-8ea5-4d52-a398-e2db237b575f";
   let awardId = "d73211dc-0756-4e07-a966-4b2a240c3496";
   let toDeleteId;
 
   beforeAll(async () => {
-    // 테스트용 데이터베이스 설정 등 필요한 작업을 수행할 수 있습니다.
+    // 테스트용 데이터베이스 설정 등 필요한 작업 수행
   });
-  // });
 
   // 테스트 종료 후에 수행되는 부분
   afterAll(async () => {
-    // 테스트용 데이터베이스 등 정리 작업을 수행할 수 있습니다.
-    const toUpdate = {
-      title: "test",
-    };
-    const updatedAward = await awardService.setAward({ id: awardId, toUpdate });
+    // 테스트용 데이터베이스 등 정리 작업을 수행
 
     await mongoose.disconnect();
   });
@@ -52,12 +46,29 @@ describe("Award Router 테스트", () => {
     expect(Array.isArray(response.body)).toBe(true);
   });
 
-  // 수상 내역 수정 테스트
-  it("PUT /awards/:id - 수상 내역 수정", async () => {
-    console.log(awardId);
+  // 수상 내역 title 수정 테스트
+  it("PUT /awards/:id - 수상 내역 title 수정", async () => {
     const response = await request(app)
       .put(`/awards/${awardId}`)
       .send({ title: "수정 test" });
+    expect(response.status).toBe(204);
+    // expect(response.body.title).toBe("수정 test");
+  });
+
+  // 수상 내역 description 수정 테스트
+  it("PUT /awards/:id - 수상 내역 description 수정", async () => {
+    const response = await request(app)
+      .put(`/awards/${awardId}`)
+      .send({ description: "수정 test" });
+    expect(response.status).toBe(204);
+    // expect(response.body.title).toBe("수정 test");
+  });
+
+  // 수상 내역 all 수정 테스트
+  it("PUT /awards/:id - 수상 내역 all 수정", async () => {
+    const response = await request(app)
+      .put(`/awards/${awardId}`)
+      .send({ title: "test", description: "test" });
     expect(response.status).toBe(204);
     // expect(response.body.title).toBe("수정 test");
   });
