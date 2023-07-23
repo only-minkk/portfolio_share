@@ -38,6 +38,20 @@ function errorMiddleware(error, req, res, next) {
           message: error.message,
         },
       });
+    case "UpdateFailed":
+      return res.status(500).json({
+        error: {
+          name: error.name,
+          message: error.message,
+        },
+      });
+    case "DeleteFailed":
+      return res.status(500).json({
+        error: {
+          name: error.name,
+          message: error.message,
+        },
+      });
     default:
       return res.status(400).send(error.message);
   }

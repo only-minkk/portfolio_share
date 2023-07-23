@@ -37,4 +37,27 @@ class NotFound extends Error {
   }
 }
 
-export { ValidationError, BeingEmail, Unauthorized, NoneUser, NotFound };
+class UpdateFailed extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "UpdateFailed";
+    this.message = "서버 오류로 업데이트에 실패하였습니다.";
+  }
+}
+class DeleteFailed extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "DeleteFailed";
+    this.message = "서버 오류로 삭제에 실패하였습니다.";
+  }
+}
+
+export {
+  ValidationError,
+  BeingEmail,
+  Unauthorized,
+  NoneUser,
+  NotFound,
+  UpdateFailed,
+  DeleteFailed,
+};
