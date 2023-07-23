@@ -1,6 +1,6 @@
-const request = require("supertest");
-const { app } = require("../../app"); // Express 애플리케이션의 app 객체 가져오기
-const mongoose = require("mongoose");
+import request from "supertest";
+import { app } from "../../app"; // Express 애플리케이션의 app 객체 가져오기
+import mongoose from "mongoose";
 
 describe("educationRouter 테스트", () => {
   // 테스트 시작 전에 수행되는 부분

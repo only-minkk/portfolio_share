@@ -1,6 +1,6 @@
-const request = require("supertest");
-const { app } = require("../../app");
-const mongoose = require("mongoose");
+import request from "supertest";
+import { app } from "../../app";
+import mongoose from "mongoose";
 
 describe("certificateRouter 테스트", () => {
   // 테스트 시작 전에 수행되는 부분
