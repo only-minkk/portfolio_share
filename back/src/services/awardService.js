@@ -41,12 +41,8 @@ class awardService {
       return newAward;
     }
 
-    const fieldToUpdate = [];
-
-    // 변경된 필드의 key 값만 추출하여 fieldToUpdate 빈 배열에 push.
-    for (const key in toUpdate) {
-      fieldToUpdate.push(key);
-    }
+    // 변경된 필드의 키 값을 fieldToUpdate 에 선언.
+    const fieldToUpdate = Object.keys(toUpdate);
 
     // update() 메서드로 변경된 필드만 업데이트
     fieldToUpdate.forEach((field) => {

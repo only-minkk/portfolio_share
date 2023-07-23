@@ -103,13 +103,6 @@ class userAuthService {
       throw new BeingEmail();
     }
 
-    const fieldToUpdate = [];
-
-    // 변경된 필드의 key값만 추출하여 fieldToUpdate 빈 배열에 push.
-    for (const key in toUpdate) {
-      fieldToUpdate.push(key);
-    }
-
     // 모든 필드가 변경됐을 경우 save()메서드로 한 번에 저장.
     if (Object.keys(toUpdate).length == 3) {
       user.name = toUpdate.name;
@@ -118,6 +111,9 @@ class userAuthService {
       const newUser = await user.save();
       return newUser;
     }
+
+    // 변경된 필드의 키 값을 fieldToUpdate 에 선언.
+    const fieldToUpdate = Object.keys(toUpdate);
 
     // update()메서드로 변경된 필드만 업데이트.
     fieldToUpdate.forEach((field) => {

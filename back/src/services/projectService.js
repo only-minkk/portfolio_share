@@ -37,12 +37,10 @@ class projectService {
       return newProject;
     }
 
-    const fieldToUpdate = [];
+    // 변경된 필드의 키 값을 fieldToUpdate 에 선언.
+    const fieldToUpdate = Object.keys(toUpdate);
 
-    for (const key in toUpdate) {
-      fieldToUpdate.push(key);
-    }
-
+    // update() 메서드로 변경된 필드만 업데이트.
     fieldToUpdate.forEach((field) => {
       const newValue = toUpdate[field];
       project = Project.update({ id, fieldToUpdate: field, newValue });
@@ -58,8 +56,15 @@ class projectService {
       throw new NotFound();
     }
     projects = await Project.deleteById({ id });
-
-    return projects;
+    if (projects.acknowledged) {
+      projects = {
+        success: true,
+        message: "게시글이 성공적으로 삭제되었습니다.",
+      };
+      return projects;
+    } else {
+      projects = { success: false, message: "게시글이 삭제되지 않았습니다." };
+    }
   }
 }
 
