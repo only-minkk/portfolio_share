@@ -9,7 +9,6 @@ import {
   CreateFailed,
   GetFailed,
   UpdateFailed,
-  DeleteFailed,
 } from "../middlewares/CustomError";
 import { errorCatch } from "../middlewares/errorMiddleware";
 import { successMessage } from "./successMessage";
@@ -55,10 +54,7 @@ class userAuthService {
     );
 
     // 비밀번호가 일치하지 않다면 에러
-    errorCatch(
-      isPasswordCorrect,
-      Unauthorized("비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.")
-    );
+    errorCatch(isPasswordCorrect, Unauthorized);
 
     // 로그인 성공 -> JWT 웹 토큰 생성
     const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";

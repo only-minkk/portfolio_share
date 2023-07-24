@@ -18,6 +18,7 @@ class Unauthorized extends Error {
   constructor(message) {
     super(message);
     this.name = "Unauthorized";
+    this.message = "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.";
   }
 }
 
