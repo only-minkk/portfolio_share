@@ -37,6 +37,22 @@ class NotFound extends Error {
   }
 }
 
+class CreateFailed extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "CreateFailed";
+    this.message = "서버 오류로 등록에 실패하였습니다.";
+  }
+}
+
+class GetFailed extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "GetFailed";
+    this.message = "서버 오류로 조회에 실패하였습니다.";
+  }
+}
+
 class UpdateFailed extends Error {
   constructor(message) {
     super(message);
@@ -58,6 +74,8 @@ export {
   Unauthorized,
   NoneUser,
   NotFound,
+  CreateFailed,
+  GetFailed,
   UpdateFailed,
   DeleteFailed,
 };

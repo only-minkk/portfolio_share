@@ -25,7 +25,7 @@ function errorMiddleware(error, req, res, next) {
         },
       });
     case "NoneUser":
-      return res.status(401).json({
+      return res.status(404).json({
         error: {
           name: error.name,
           message: error.message,
@@ -33,6 +33,20 @@ function errorMiddleware(error, req, res, next) {
       });
     case "NotFound":
       return res.status(404).json({
+        error: {
+          name: error.name,
+          message: error.message,
+        },
+      });
+    case "CreateFailed":
+      return res.status(500).json({
+        error: {
+          name: error.name,
+          message: error.message,
+        },
+      });
+    case "GetFailed":
+      return res.status(500).json({
         error: {
           name: error.name,
           message: error.message,
@@ -57,4 +71,10 @@ function errorMiddleware(error, req, res, next) {
   }
 }
 
-export { errorMiddleware };
+function errorCatch(data, err) {
+  if (!data) {
+    throw new err();
+  }
+}
+
+export { errorMiddleware, errorCatch };
