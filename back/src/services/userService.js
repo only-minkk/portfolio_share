@@ -2,16 +2,26 @@ import { User } from "../db"; // from을 폴더(db) 로 설정 시, 디폴트로
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
-import { BeingEmail, Unauthorized, NoneUser } from "../middlewares/CustomError";
+import {
+  BeingEmail,
+  Unauthorized,
+  NoneUser,
+  CreateFailed,
+  GetFailed,
+  UpdateFailed,
+  DeleteFailed,
+} from "../middlewares/CustomError";
+import { errorCatch } from "../middlewares/errorMiddleware";
+import { successMessage } from "./successMessage";
 
 class userAuthService {
   // 유저 등록
   static async addUser({ name, email, password }) {
     // 이메일 중복 확인
     const user = await User.findByEmail({ email });
-    if (user) {
-      throw new BeingEmail();
-    }
+
+    // 이메일이 존재한다면 에러
+    errorCatch(!user, BeingEmail);
 
     // 비밀번호 해쉬화
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -22,7 +32,9 @@ class userAuthService {
 
     // db에 저장
     const createdNewUser = await User.create({ newUser });
-    createdNewUser.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
+
+    // 등록 실패한다면 에러
+    errorCatch(createdNewUser, CreateFailed);
 
     return createdNewUser;
   }
@@ -31,9 +43,9 @@ class userAuthService {
   static async getUser({ email, password }) {
     // 이메일 db에 존재 여부 확인
     const user = await User.findByEmail({ email });
-    if (!user) {
-      throw new NoneUser();
-    }
+
+    // 유저가 존재하지 않는다면 에러
+    errorCatch(user, NoneUser);
 
     // 비밀번호 일치 여부 확인
     const correctPasswordHash = user.password;
@@ -41,11 +53,12 @@ class userAuthService {
       password,
       correctPasswordHash
     );
-    if (!isPasswordCorrect) {
-      throw new Unauthorized(
-        "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요."
-      );
-    }
+
+    // 비밀번호가 일치하지 않다면 에러
+    errorCatch(
+      isPasswordCorrect,
+      Unauthorized("비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.")
+    );
 
     // 로그인 성공 -> JWT 웹 토큰 생성
     const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
@@ -73,9 +86,7 @@ class userAuthService {
     const user = await User.findById({ user_id });
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
-    if (!user) {
-      throw new NoneUser();
-    }
+    errorCatch(user, NoneUser);
 
     return user;
   }
@@ -83,6 +94,10 @@ class userAuthService {
   // 모든 유저 조회
   static async getUsers() {
     const users = await User.findAll();
+
+    // 조회 실패시 에러
+    errorCatch(users, GetFailed);
+
     return users;
   }
 
@@ -92,16 +107,12 @@ class userAuthService {
     let user = await User.findById({ user_id });
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
-    if (!user) {
-      throw new NoneUser();
-    }
+    errorCatch(user, NoneUser);
 
     // 변경 이메일이 이미 존재하는 이메일인지 확인 후, 존재한다면 에러.
     const email = toUpdate.email;
     const beingEmailUser = await User.findByEmail({ email });
-    if (beingEmailUser) {
-      throw new BeingEmail();
-    }
+    errorCatch(!beingEmailUser, BeingEmail);
 
     // 모든 필드가 변경됐을 경우 save()메서드로 한 번에 저장.
     if (Object.keys(toUpdate).length == 3) {
@@ -109,19 +120,26 @@ class userAuthService {
       user.email = toUpdate.email;
       user.description = toUpdate.description;
       const newUser = await user.save();
-      return newUser;
+
+      // save() 실패시 에러.
+      errorCatch(newUser, UpdateFailed);
+
+      return successMessage.updateSuccessMessage;
     }
 
     // 변경된 필드의 키 값을 fieldToUpdate 에 선언.
     const fieldToUpdate = Object.keys(toUpdate);
 
     // update()메서드로 변경된 필드만 업데이트.
-    fieldToUpdate.forEach((field) => {
+    for (const field of fieldToUpdate) {
       const newValue = toUpdate[field];
       user = User.update({ user_id, fieldToUpdate: field, newValue });
-    });
+    }
 
-    return user;
+    // update() 실패시 에러
+    errorCatch(user, UpdateFailed);
+
+    return successMessage.updateSuccessMessage;
   }
 }
 
