@@ -16,13 +16,13 @@ const CertEditForm = ({ currentCert, setCerts, setIsEditing }) => {
     const updatedCert = {};
 
     // 변경된 title 필드 추가
-    if (title !== currentCert.title) {
-      updatedCert.title = title;
+    if (title.trim() !== currentCert.title) {
+      updatedCert.title = title.trim();
     }
 
     // 변경된 description 필드 추가
-    if (description !== currentCert.description) {
-      updatedCert.description = description;
+    if (description.trim() !== currentCert.description) {
+      updatedCert.description = description.trim();
     }
 
     // 변경된 when_date 필드 추가

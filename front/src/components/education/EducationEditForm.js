@@ -23,18 +23,18 @@ function EducationEditForm({ currentEducation, setEducations, setIsEditing }) {
     const updatedEducation = {};
 
     // 변경된 school 필드 추가
-    if (school !== currentEducation.school) {
-      updatedEducation.school = school;
+    if (school.trim() !== currentEducation.school) {
+      updatedEducation.school = school.trim();
     }
 
     // 변경된 major 필드 추가
-    if (major !== currentEducation.major) {
-      updatedEducation.major = major;
+    if (major.trim() !== currentEducation.major) {
+      updatedEducation.major = major.trim();
     }
 
     // 변경된 position 필드 추가
-    if (position !== currentEducation.position) {
-      updatedEducation.position = position;
+    if (position.trim() !== currentEducation.position) {
+      updatedEducation.position = position.trim();
     }
 
     // 변경된 필드가 없는 경우, API 요청을 보내지 않음

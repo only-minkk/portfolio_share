@@ -23,13 +23,13 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
     }
 
     // 변경된 title 필드 추가
-    if (title !== currentProject.title) {
-      updatedProject.title = title;
+    if (title.trim() !== currentProject.title) {
+      updatedProject.title = title.trim();
     }
 
     // 변경된 description 필드 추가
-    if (description !== currentProject.description) {
-      updatedProject.description = description;
+    if (description.trim() !== currentProject.description) {
+      updatedProject.description = description.trim();
     }
 
     // 변경된 from_date 필드 추가

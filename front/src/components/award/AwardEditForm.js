@@ -16,13 +16,13 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
     const updatedAward = {};
 
     // 변경된 title 필드 추가
-    if (title !== currentAward.title) {
-      updatedAward.title = title;
+    if (title.trim() !== currentAward.title) {
+      updatedAward.title = title.trim();
     }
 
     // 변경된 description 필드 추가
-    if (description !== currentAward.description) {
-      updatedAward.description = description;
+    if (description.trim() !== currentAward.description) {
+      updatedAward.description = description.trim();
     }
 
     // 변경된 필드가 없는 경우 API 요청을 보내지 않음.

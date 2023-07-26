@@ -15,16 +15,16 @@ function UserEditForm({ user, setIsEditing, setUser }) {
 
     const updatedFields = {};
 
-    if (name !== user.name) {
-      updatedFields.name = name;
+    if (name.trim() !== user.name) {
+      updatedFields.name = name.trim();
     }
 
-    if (email !== user.email) {
-      updatedFields.email = email;
+    if (email.trim() !== user.email) {
+      updatedFields.email = email.trim();
     }
 
-    if (description !== user.description) {
-      updatedFields.description = description;
+    if (description.trim() !== user.description) {
+      updatedFields.description = description.trim();
     }
 
     if (Object.keys(updatedFields).length === 0) {
