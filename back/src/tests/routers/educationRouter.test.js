@@ -53,7 +53,7 @@ describe("educationRouter 테스트", () => {
   it("PUT /educations/:id - 학력 내역 school 수정", async () => {
     const response = await request(app)
       .put(`/educations/${educationId}`)
-      .send({ title: "수정 school" });
+      .send({ school: "수정 school" });
     expect(response.status).toBe(204);
     // expect(response.body.title).toBe("수정 test");
   });
