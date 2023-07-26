@@ -39,6 +39,74 @@ describe("projectRouter 테스트", () => {
     toDeletedId = response.body.id;
   });
 
+  // 프로젝트 내역 추가 title 내역 없을 때
+  it("POST /project - 프로젝트 내역 추가 title 내역 없을 때", async () => {
+    const response = await request(app).post("/project").send({
+      user_id: userId,
+      description: "프로젝트 description",
+      from_date: "1111-11-11",
+      to_date: "1212-12-12",
+    });
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({
+      error: {
+        name: "ValidationError",
+        message: "title 값을 입력해 주세요.",
+      },
+    });
+  });
+
+  // 프로젝트 내역 추가 description 내역 없을 때
+  it("POST /project - 프로젝트 내역 추가 description 내역 없을 때", async () => {
+    const response = await request(app).post("/project").send({
+      user_id: userId,
+      title: "프로젝트 title",
+      from_date: "1111-11-11",
+      to_date: "1212-12-12",
+    });
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({
+      error: {
+        name: "ValidationError",
+        message: "description 값을 입력해 주세요.",
+      },
+    });
+  });
+
+  // 프로젝트 내역 추가 from_date 내역 없을 때
+  it("POST /project - 프로젝트 내역 추가 from_date 내역 없을 때", async () => {
+    const response = await request(app).post("/project").send({
+      user_id: userId,
+      title: "프로젝트 title",
+      description: "프로젝트 description",
+      to_date: "1212-12-12",
+    });
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({
+      error: {
+        name: "ValidationError",
+        message: "from_date 값을 입력해 주세요.",
+      },
+    });
+  });
+
+  // 프로젝트 내역 추가 to_date 내역 없을 때
+  it("POST /project - 프로젝트 내역 추가 to_date 내역 없을 때", async () => {
+    const response = await request(app).post("/project").send({
+      user_id: userId,
+      title: "프로젝트 title",
+      description: "프로젝트 description",
+      from_date: "1111-11-11",
+    });
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({
+      error: {
+        name: "ValidationError",
+        message: "to_date 값을 입력해 주세요.",
+      },
+    });
+  });
+
   // 프로젝트 내역 조회 테스트
   it("GET /projects/:id - 프로젝트 내역 조회", async () => {
     const response = await request(app).get(`/projects/${userId}`);

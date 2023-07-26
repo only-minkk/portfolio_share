@@ -20,7 +20,6 @@ describe("awardRouter 테스트", () => {
   });
 
   // 수상 내역 추가 테스트
-
   it("POST /award - 수상 내역 추가", async () => {
     const response = await request(app).post("/award").send({
       user_id: userId,
@@ -39,6 +38,36 @@ describe("awardRouter 테스트", () => {
     expect(response.body.description).toBe("수상 내용");
   });
 
+  // 수상 내역 추가 title 내역 없을 때
+  it("POST /award - 수상 내역 추가 title 내역 없을 때", async () => {
+    const response = await request(app).post("/award").send({
+      user_id: userId,
+      description: "수상 내용",
+    });
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({
+      error: {
+        name: "ValidationError",
+        message: "title 값을 입력해 주세요.",
+      },
+    });
+  });
+
+  // 수상 내역 추가 description 내역 없을 때
+  it("POST /award - 수상 내역 추가 description 내역 없을 때", async () => {
+    const response = await request(app).post("/award").send({
+      user_id: userId,
+      title: "수상 제목",
+    });
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({
+      error: {
+        name: "ValidationError",
+        message: "description 값을 입력해 주세요.",
+      },
+    });
+  });
+
   // 수상 내역 조회 테스트
   it("GET /awards/:id - 수상 내역 조회", async () => {
     const response = await request(app).get(`/awards/${userId}`);
@@ -52,7 +81,6 @@ describe("awardRouter 테스트", () => {
       .put(`/awards/${awardId}`)
       .send({ title: "수정 test" });
     expect(response.status).toBe(204);
-    // expect(response.body.title).toBe("수정 test");
   });
 
   // 수상 내역 description 수정 테스트
@@ -61,7 +89,6 @@ describe("awardRouter 테스트", () => {
       .put(`/awards/${awardId}`)
       .send({ description: "수정 test" });
     expect(response.status).toBe(204);
-    // expect(response.body.title).toBe("수정 test");
   });
 
   // 수상 내역 all 수정 테스트
@@ -70,13 +97,11 @@ describe("awardRouter 테스트", () => {
       .put(`/awards/${awardId}`)
       .send({ title: "test", description: "test" });
     expect(response.status).toBe(204);
-    // expect(response.body.title).toBe("수정 test");
   });
 
   // 수상 내역 삭제 테스트
   it("DELETE /awards/:id - 수상 내역 삭제", async () => {
     const response = await request(app).delete(`/awards/${toDeleteId}`);
     expect(response.status).toBe(204);
-    // expect(response.body).toHaveProperty();
   });
 });

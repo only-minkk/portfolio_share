@@ -37,6 +37,54 @@ describe("certificateRouter 테스트", () => {
     toDeletedId = response.body.id;
   });
 
+  // 자격증 내역 추가 title 내역 없을 때
+  it("POST /certificate - 자격증 내역 추가 title 내역 없을 때", async () => {
+    const response = await request(app).post("/certificate").send({
+      user_id: userId,
+      description: "자격증 description",
+      when_date: "2023-07-22",
+    });
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({
+      error: {
+        name: "ValidationError",
+        message: "title 값을 입력해 주세요.",
+      },
+    });
+  });
+
+  // 자격증 내역 추가 description 내역 없을 때
+  it("POST /certificate - 자격증 내역 추가 description 내역 없을 때", async () => {
+    const response = await request(app).post("/certificate").send({
+      user_id: userId,
+      title: "자격증 title",
+      when_date: "2023-07-22",
+    });
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({
+      error: {
+        name: "ValidationError",
+        message: "description 값을 입력해 주세요.",
+      },
+    });
+  });
+
+  // 자격증 내역 추가 when_date 내역 없을 때
+  it("POST /certificate - 자격증 내역 추가 when_date 내역 없을 때", async () => {
+    const response = await request(app).post("/certificate").send({
+      user_id: userId,
+      title: "자격증 title",
+      description: "자격증 description",
+    });
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({
+      error: {
+        name: "ValidationError",
+        message: "when_date 값을 입력해 주세요.",
+      },
+    });
+  });
+
   // 자격증 내역 조회 테스트
   it("GET /certificates/:id - 자격증 내역 조회", async () => {
     const response = await request(app).get(`/certificates/${userId}`);

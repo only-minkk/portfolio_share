@@ -20,7 +20,6 @@ describe("educationRouter 테스트", () => {
   });
 
   // 학력 내역 추가 테스트
-
   it("POST /education - 학력 내역 추가", async () => {
     const response = await request(app).post("/education").send({
       user_id: userId,
@@ -35,11 +34,59 @@ describe("educationRouter 테스트", () => {
     expect(response.body).toHaveProperty("school", "학교");
     expect(response.body).toHaveProperty("major", "전공");
     expect(response.body).toHaveProperty("position", "재학중");
-    // expect(response.body.user_id).toBe(userId);
+    expect(response.body.user_id).toBe(userId);
     toDeleteId = response.body.id;
-    // expect(response.body.school).toBe("학교");
-    // expect(response.body.major).toBe("전공");
-    // expect(response.body.position).toBe("재학중");
+    expect(response.body.school).toBe("학교");
+    expect(response.body.major).toBe("전공");
+    expect(response.body.position).toBe("재학중");
+  });
+
+  // 학력 내역 추가 school 내역 없을 때
+  it("POST /education - 학력 내역 추가 school 내역 없을 때", async () => {
+    const response = await request(app).post("/education").send({
+      user_id: userId,
+      major: "전공",
+      position: "재학중",
+    });
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({
+      error: {
+        name: "ValidationError",
+        message: "school 값을 입력해 주세요.",
+      },
+    });
+  });
+
+  // 학력 내역 추가 major 내역 없을 때
+  it("POST /education - 학력 내역 추가 major 내역 없을 때", async () => {
+    const response = await request(app).post("/education").send({
+      user_id: userId,
+      school: "학교",
+      position: "재학중",
+    });
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({
+      error: {
+        name: "ValidationError",
+        message: "major 값을 입력해 주세요.",
+      },
+    });
+  });
+
+  // 학력 내역 추가 position 내역 없을 때
+  it("POST /education - 학력 내역 추가 position 내역 없을 때", async () => {
+    const response = await request(app).post("/education").send({
+      user_id: userId,
+      school: "학교",
+      major: "전공",
+    });
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({
+      error: {
+        name: "ValidationError",
+        message: "position 값을 입력해 주세요.",
+      },
+    });
   });
 
   // 학력 내역 조회 테스트
@@ -55,7 +102,6 @@ describe("educationRouter 테스트", () => {
       .put(`/educations/${educationId}`)
       .send({ school: "수정 school" });
     expect(response.status).toBe(204);
-    // expect(response.body.title).toBe("수정 test");
   });
 
   // 학력 내역 major 수정 테스트
@@ -64,7 +110,6 @@ describe("educationRouter 테스트", () => {
       .put(`/educations/${educationId}`)
       .send({ major: "수정 major" });
     expect(response.status).toBe(204);
-    // expect(response.body.title).toBe("수정 test");
   });
 
   // 학력 내역 position 수정 테스트
@@ -73,7 +118,6 @@ describe("educationRouter 테스트", () => {
       .put(`/educations/${educationId}`)
       .send({ position: "학사 졸업" });
     expect(response.status).toBe(204);
-    // expect(response.body.title).toBe("수정 test");
   });
 
   // 학력 내역 school, major, position 수정 테스트
@@ -82,13 +126,11 @@ describe("educationRouter 테스트", () => {
       .put(`/educations/${educationId}`)
       .send({ school: "test", major: "test", position: "재학중" });
     expect(response.status).toBe(204);
-    // expect(response.body.title).toBe("수정 test");
   });
 
   // 학력 내역 삭제 테스트
   it("DELETE /educations/:id - 학력 내역 삭제", async () => {
     const response = await request(app).delete(`/educations/${toDeleteId}`);
     expect(response.status).toBe(204);
-    // expect(response.body).toHaveProperty();
   });
 });
