@@ -65,7 +65,11 @@ class educationService {
     // update() 메서드로 변경된 필드만 업데이트.
     for (const field of fieldToUpdate) {
       const newValue = toUpdate[field];
-      education = Education.update({ id, fieldToUpdate: field, newValue });
+      education = await Education.update({
+        id,
+        fieldToUpdate: field,
+        newValue,
+      });
     }
 
     // update() 실패시 에러

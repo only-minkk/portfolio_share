@@ -64,7 +64,7 @@ class awardService {
     // update() 메서드로 변경된 필드만 업데이트
     for (const field of fieldToUpdate) {
       const newValue = toUpdate[field];
-      award = Award.update({ id, fieldToUpdate: field, newValue });
+      award = await Award.update({ id, fieldToUpdate: field, newValue });
     }
 
     // update() 실패시 에러
