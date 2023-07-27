@@ -3,11 +3,11 @@ import { app } from "../../app";
 import mongoose from "mongoose";
 
 describe("projectRouter 테스트", () => {
-  // 테스트 시작 전에 수행되는 부분
   let userId = "b0deebdf-8ea5-4d52-a398-e2db237b575f";
   let projectId = "c4031593-3824-4e9a-87ad-ffc406a70b0c";
   let toDeletedId;
 
+  // 테스트 시작 전에 수행되는 부분
   beforeAll(async () => {
     // 테스트용 데이터베이스 설정 등 필요한 작업 수행
   });

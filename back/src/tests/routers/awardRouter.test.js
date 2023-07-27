@@ -3,11 +3,11 @@ import { app } from "../../app"; // Express 애플리케이션의 app 객체 가
 import mongoose from "mongoose";
 
 describe("awardRouter 테스트", () => {
-  // 테스트 시작 전에 수행되는 부분
   let userId = "b0deebdf-8ea5-4d52-a398-e2db237b575f";
   let awardId = "d73211dc-0756-4e07-a966-4b2a240c3496";
   let toDeleteId;
 
+  // 테스트 시작 전에 수행되는 부분
   beforeAll(async () => {
     // 테스트용 데이터베이스 설정 등 필요한 작업 수행
   });

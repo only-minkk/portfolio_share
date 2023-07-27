@@ -3,11 +3,11 @@ import { app } from "../../app";
 import mongoose from "mongoose";
 
 describe("certificateRouter 테스트", () => {
-  // 테스트 시작 전에 수행되는 부분
   let userId = "b0deebdf-8ea5-4d52-a398-e2db237b575f";
   let certificateId = "6a647e85-3a40-4364-9e4a-2c8307fa69d1";
   let toDeletedId;
 
+  // 테스트 시작 전에 수행되는 부분
   beforeAll(async () => {
     // 테스트용 데이터베이스 설정 등 필요한 작업 수행
   });
