@@ -5,6 +5,21 @@ class ValidationError extends Error {
   }
 }
 
+class NotLoginUser extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "NotLoginUser";
+    this.message = "로그인한 유저만 사용할 수 있는 서비스입니다.";
+  }
+}
+class TokenNotFoundError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "TokenNotFoundError";
+    this.message = "정상적인 토큰이 아닙니다. 다시 한 번 확인해 주세요.";
+  }
+}
+
 class BeingEmail extends Error {
   constructor(message) {
     super(message);
@@ -71,6 +86,8 @@ class DeleteFailed extends Error {
 
 export {
   ValidationError,
+  NotLoginUser,
+  TokenNotFoundError,
   BeingEmail,
   Unauthorized,
   NoneUser,
