@@ -153,7 +153,13 @@ describe("userRouter 테스트", () => {
       .put(`/users/${userId}`)
       .set("Authorization", `Bearer ${token}`)
       .send({ name: "testCode 수정" });
-    expect(response.status).toBe(204);
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty("name", "testCode 수정");
+    expect(response.body).toHaveProperty("email", "testCode@testCode.com");
+    expect(response.body).toHaveProperty(
+      "description",
+      "설명이 아직 없습니다. 추가해 주세요."
+    );
   });
 
   // 유저 정보 email 수정
@@ -162,7 +168,13 @@ describe("userRouter 테스트", () => {
       .put(`/users/${userId}`)
       .set("Authorization", `Bearer ${token}`)
       .send({ email: "update@update.com" });
-    expect(response.status).toBe(204);
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty("name", "testCode 수정");
+    expect(response.body).toHaveProperty("email", "update@update.com");
+    expect(response.body).toHaveProperty(
+      "description",
+      "설명이 아직 없습니다. 추가해 주세요."
+    );
   });
 
   // 유저 정보 description 수정
@@ -171,6 +183,9 @@ describe("userRouter 테스트", () => {
       .put(`/users/${userId}`)
       .set("Authorization", `Bearer ${token}`)
       .send({ description: "testCode 수정" });
-    expect(response.status).toBe(204);
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty("name", "testCode 수정");
+    expect(response.body).toHaveProperty("email", "update@update.com");
+    expect(response.body).toHaveProperty("description", "testCode 수정");
   });
 });

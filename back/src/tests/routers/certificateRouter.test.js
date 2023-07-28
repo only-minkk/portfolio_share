@@ -99,7 +99,11 @@ describe("certificateRouter 테스트", () => {
       .send({
         title: "수정 title",
       });
-    expect(response.status).toBe(204);
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({
+      success: true,
+      message: "업데이트에 성공하였습니다.",
+    });
   });
 
   // 자격증 내역 description 수정 테스트
@@ -107,7 +111,11 @@ describe("certificateRouter 테스트", () => {
     const response = await request(app)
       .put(`/certificates/${certificateId}`)
       .send({ description: "수정 description" });
-    expect(response.status).toBe(204);
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({
+      success: true,
+      message: "업데이트에 성공하였습니다.",
+    });
   });
 
   // 자격증 내역 when_date 수정 테스트
@@ -115,7 +123,11 @@ describe("certificateRouter 테스트", () => {
     const response = await request(app)
       .put(`/certificates/${certificateId}`)
       .send({ when_date: "2000-02-02" });
-    expect(response.status).toBe(204);
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({
+      success: true,
+      message: "업데이트에 성공하였습니다.",
+    });
   });
 
   // 자격증 내역 all 수정 테스트
@@ -123,12 +135,20 @@ describe("certificateRouter 테스트", () => {
     const response = await request(app)
       .put(`/certificates/${certificateId}`)
       .send({ title: "test", description: "test", when_date: "1111-11-11" });
-    expect(response.status).toBe(204);
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({
+      success: true,
+      message: "업데이트에 성공하였습니다.",
+    });
   });
 
   // 자격증 내역 삭제 테스트
   it("DELETE /certificates/:id - 자격증 내역 삭제", async () => {
     const response = await request(app).delete(`/certificates/${toDeletedId}`);
-    expect(response.status).toBe(204);
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({
+      success: true,
+      message: "게시글이 성공적으로 삭제되었습니다.",
+    });
   });
 });

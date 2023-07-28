@@ -119,7 +119,11 @@ describe("projectRouter 테스트", () => {
     const response = await request(app).put(`/projects/${projectId}`).send({
       title: "수정 title",
     });
-    expect(response.status).toBe(204);
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({
+      success: true,
+      message: "업데이트에 성공하였습니다.",
+    });
   });
 
   // 프로젝트 내역 description 수정 테스트
@@ -127,7 +131,11 @@ describe("projectRouter 테스트", () => {
     const response = await request(app).put(`/projects/${projectId}`).send({
       description: "수정 description",
     });
-    expect(response.status).toBe(204);
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({
+      success: true,
+      message: "업데이트에 성공하였습니다.",
+    });
   });
 
   // 프로젝트 내역 from_date 수정 테스트
@@ -135,7 +143,11 @@ describe("projectRouter 테스트", () => {
     const response = await request(app).put(`/projects/${projectId}`).send({
       from_date: "2222-11-22",
     });
-    expect(response.status).toBe(204);
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({
+      success: true,
+      message: "업데이트에 성공하였습니다.",
+    });
   });
 
   // 프로젝트 내역 to_date 수정 테스트
@@ -143,7 +155,11 @@ describe("projectRouter 테스트", () => {
     const response = await request(app).put(`/projects/${projectId}`).send({
       to_date: "2121-12-21",
     });
-    expect(response.status).toBe(204);
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({
+      success: true,
+      message: "업데이트에 성공하였습니다.",
+    });
   });
 
   // 프로젝트 내역 all 수정 테스트
@@ -154,12 +170,20 @@ describe("projectRouter 테스트", () => {
       from_date: "1111-11-11",
       to_date: "1212-12-12",
     });
-    expect(response.status).toBe(204);
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({
+      success: true,
+      message: "업데이트에 성공하였습니다.",
+    });
   });
 
   // 프로젝트 내역 삭제 테스트
   it("DELETE /projects/:id - 프로젝트 내역 삭제", async () => {
     const response = await request(app).delete(`/projects/${toDeletedId}`);
-    expect(response.status).toBe(204);
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({
+      success: true,
+      message: "게시글이 성공적으로 삭제되었습니다.",
+    });
   });
 });

@@ -101,7 +101,11 @@ describe("educationRouter 테스트", () => {
     const response = await request(app)
       .put(`/educations/${educationId}`)
       .send({ school: "수정 school" });
-    expect(response.status).toBe(204);
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({
+      success: true,
+      message: "업데이트에 성공하였습니다.",
+    });
   });
 
   // 학력 내역 major 수정 테스트
@@ -109,7 +113,11 @@ describe("educationRouter 테스트", () => {
     const response = await request(app)
       .put(`/educations/${educationId}`)
       .send({ major: "수정 major" });
-    expect(response.status).toBe(204);
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({
+      success: true,
+      message: "업데이트에 성공하였습니다.",
+    });
   });
 
   // 학력 내역 position 수정 테스트
@@ -117,7 +125,11 @@ describe("educationRouter 테스트", () => {
     const response = await request(app)
       .put(`/educations/${educationId}`)
       .send({ position: "학사 졸업" });
-    expect(response.status).toBe(204);
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({
+      success: true,
+      message: "업데이트에 성공하였습니다.",
+    });
   });
 
   // 학력 내역 school, major, position 수정 테스트
@@ -125,12 +137,20 @@ describe("educationRouter 테스트", () => {
     const response = await request(app)
       .put(`/educations/${educationId}`)
       .send({ school: "test", major: "test", position: "재학중" });
-    expect(response.status).toBe(204);
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({
+      success: true,
+      message: "업데이트에 성공하였습니다.",
+    });
   });
 
   // 학력 내역 삭제 테스트
   it("DELETE /educations/:id - 학력 내역 삭제", async () => {
     const response = await request(app).delete(`/educations/${toDeleteId}`);
-    expect(response.status).toBe(204);
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({
+      success: true,
+      message: "게시글이 성공적으로 삭제되었습니다.",
+    });
   });
 });
