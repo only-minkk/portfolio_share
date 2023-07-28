@@ -6,9 +6,10 @@ const tryCatchAsyncHandler = (handler) => {
       let statusCode = 200; // 기본 상태 코드는 200으로 설정
       if (req.method === "POST") {
         statusCode = 201; // Created
-      } else if (req.method === "PUT" || req.method === "DELETE") {
-        statusCode = 204; // No Content
       }
+      // else if (req.method === "PUT" || req.method === "DELETE") {
+      //   statusCode = 204; // No Content
+      // }
       res.status(statusCode).json(result);
     } catch (error) {
       next(error);
