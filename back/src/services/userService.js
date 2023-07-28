@@ -11,7 +11,7 @@ import {
   UpdateFailed,
 } from "../middlewares/CustomError";
 import { errorCatch } from "../middlewares/errorMiddleware";
-import { successMessage } from "./successMessage";
+// import { successMessage } from "./successMessage";
 
 class userAuthService {
   // 유저 등록
