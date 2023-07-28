@@ -129,7 +129,7 @@ class userAuthService {
     // update()메서드로 변경된 필드만 업데이트.
     for (const field of fieldToUpdate) {
       const newValue = toUpdate[field];
-      user = User.update({ user_id, fieldToUpdate: field, newValue });
+      user = await User.update({ user_id, fieldToUpdate: field, newValue });
     }
 
     // update() 실패시 에러
