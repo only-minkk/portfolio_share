@@ -120,7 +120,8 @@ class userAuthService {
       // save() 실패시 에러.
       errorCatch(newUser, UpdateFailed);
 
-      return successMessage.updateSuccessMessage;
+      return newUser;
+      // return successMessage.updateSuccessMessage;
     }
 
     // 변경된 필드의 키 값을 fieldToUpdate 에 선언.
@@ -135,7 +136,8 @@ class userAuthService {
     // update() 실패시 에러
     errorCatch(user, UpdateFailed);
 
-    return successMessage.updateSuccessMessage;
+    return user;
+    // return successMessage.updateSuccessMessage;
   }
 }
 
