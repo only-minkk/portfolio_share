@@ -3,7 +3,7 @@ import {
   educationValidate,
   educationUpdateValidate,
 } from "../validation/educationValidation";
-import { tryCatchAsyncHandler } from "../util/tryCatchAsyncHandler";
+import { tryCatchAsyncHandler } from "../utils/tryCatchAsyncHandler";
 import { educationService } from "../services/educationService";
 
 const educationRouter = Router();

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { tryCatchAsyncHandler } from "../util/tryCatchAsyncHandler";
+import { tryCatchAsyncHandler } from "../utils/tryCatchAsyncHandler";
 import { boardService } from "../services/boardService";
 
 const boardRouter = Router();

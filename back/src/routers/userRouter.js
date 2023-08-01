@@ -5,7 +5,7 @@ import {
   validateLoginUser,
   userUpdateValidation,
 } from "../validation/userValidation";
-import { tryCatchAsyncHandler } from "../util/tryCatchAsyncHandler";
+import { tryCatchAsyncHandler } from "../utils/tryCatchAsyncHandler";
 import { userAuthService } from "../services/userService";
 
 const userAuthRouter = Router();

@@ -3,7 +3,7 @@ import {
   certificateValidate,
   certificateUpdateValidate,
 } from "../validation/certificateValidation";
-import { tryCatchAsyncHandler } from "../util/tryCatchAsyncHandler";
+import { tryCatchAsyncHandler } from "../utils/tryCatchAsyncHandler";
 import { certificateService } from "../services/certificateService";
 
 const certificateRouter = Router();

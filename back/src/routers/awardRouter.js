@@ -3,7 +3,7 @@ import {
   awardValidate,
   awardUpdateValidate,
 } from "../validation/awardValidation";
-import { tryCatchAsyncHandler } from "../util/tryCatchAsyncHandler";
+import { tryCatchAsyncHandler } from "../utils/tryCatchAsyncHandler";
 import { awardService } from "../services/awardService";
 
 const awardRouter = Router();
