@@ -3,7 +3,7 @@ import {
   projectValidate,
   projectUpdateValidate,
 } from "../middlewares/projectValidation";
-import { tryCatchAsyncHandler } from "../middlewares/tryCatchAsyncHandler";
+import { tryCatchAsyncHandler } from "../util/tryCatchAsyncHandler";
 import { projectService } from "../services/projectService";
 
 const projectRouter = Router();

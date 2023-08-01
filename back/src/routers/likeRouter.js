@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { tryCatchAsyncHandler } from "../middlewares/tryCatchAsyncHandler";
+import { tryCatchAsyncHandler } from "../util/tryCatchAsyncHandler";
 import { LikeModel } from "../db/schemas/like";
 
 const likeRouter = Router();
