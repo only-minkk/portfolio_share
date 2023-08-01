@@ -8,7 +8,7 @@ import {
   DeleteFailed,
 } from "../middlewares/CustomError";
 import { errorCatch } from "../middlewares/errorMiddleware";
-import { successMessage } from "./successMessage";
+import { successMessage } from "../util/successMessage";
 
 class awardService {
   // 수상 내역 등록

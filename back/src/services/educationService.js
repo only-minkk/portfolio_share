@@ -8,7 +8,7 @@ import {
   DeleteFailed,
 } from "../middlewares/CustomError";
 import { errorCatch } from "../middlewares/errorMiddleware";
-import { successMessage } from "./successMessage";
+import { successMessage } from "../util/successMessage";
 
 class educationService {
   // 학력 추가
