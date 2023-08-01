@@ -1,9 +1,9 @@
-import { ValidationError } from "./CustomError";
+import { ValidationError } from "../middlewares/CustomError";
 
 // 유효성 검사
 function validate(data, field) {
-  // 올바른 필드명.
-  const correctField = ["title", "description", "when_date"];
+  // 올바른 필드명
+  const correctField = ["title", "description", "from_date", "to_date"];
 
   // 필드명이 올바른지 확인. 올바르지 않다면 에러.
   if (!correctField.includes(field)) {
@@ -18,35 +18,36 @@ function validate(data, field) {
   }
 }
 
-// 자격증 추가 유효성 검사
-function certificateValidate(req, res, next) {
-  const { title, description, when_date } = req.body;
+// 프로젝트 추가 유효성 검사
+function projectValidate(req, res, next) {
+  const { title, description, from_date, to_date } = req.body;
 
   validate(title, "title");
   validate(description, "description");
-  validate(when_date, "when_date");
+  validate(from_date, "from_date");
+  validate(to_date, "to_date");
   next();
 }
 
-// 자격증 변경 유효성 검사
-function certificateUpdateValidate(req, res, next) {
+// 프로젝트 변경 유효성 검사
+function projectUpdateValidate(req, res, next) {
   // 변경 요청 값.
-  const certificateToUpdate = req.body;
+  const projectToUpdate = req.body;
 
   // 변경할 필드를 넣을 빈 배열
   const fieldToUpdate = [];
 
-  // 변경할 값의 필드를 빈 배열에 push.
-  for (const field in certificateToUpdate) {
+  // 변경할 값의 필드를 빈 배열에 push
+  for (const field in projectToUpdate) {
     fieldToUpdate.push(field);
   }
 
-  //변경할 필드를 토대로 유효성 검사.
+  // 변경할 필드를 토대로 유효성 검사
   for (const field of fieldToUpdate) {
-    validate(certificateToUpdate[field], field);
+    validate(projectToUpdate[field], field);
   }
 
   next();
 }
 
-export { certificateValidate, certificateUpdateValidate };
+export { projectValidate, projectUpdateValidate };

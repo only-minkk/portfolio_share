@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
   projectValidate,
   projectUpdateValidate,
-} from "../middlewares/projectValidation";
+} from "../validation/projectValidation";
 import { tryCatchAsyncHandler } from "../util/tryCatchAsyncHandler";
 import { projectService } from "../services/projectService";
 

@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
   certificateValidate,
   certificateUpdateValidate,
-} from "../middlewares/certificateValidation";
+} from "../validation/certificateValidation";
 import { tryCatchAsyncHandler } from "../util/tryCatchAsyncHandler";
 import { certificateService } from "../services/certificateService";
 

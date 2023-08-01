@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
   awardValidate,
   awardUpdateValidate,
-} from "../middlewares/awardValidation";
+} from "../validation/awardValidation";
 import { tryCatchAsyncHandler } from "../util/tryCatchAsyncHandler";
 import { awardService } from "../services/awardService";
 

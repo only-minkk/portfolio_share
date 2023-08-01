@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
   educationValidate,
   educationUpdateValidate,
-} from "../middlewares/educationValidation";
+} from "../validation/educationValidation";
 import { tryCatchAsyncHandler } from "../util/tryCatchAsyncHandler";
 import { educationService } from "../services/educationService";
 

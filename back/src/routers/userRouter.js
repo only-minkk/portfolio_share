@@ -4,7 +4,7 @@ import {
   validateCreateUser,
   validateLoginUser,
   userUpdateValidation,
-} from "../middlewares/userValidation";
+} from "../validation/userValidation";
 import { tryCatchAsyncHandler } from "../util/tryCatchAsyncHandler";
 import { userAuthService } from "../services/userService";
 
