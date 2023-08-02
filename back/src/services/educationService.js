@@ -7,7 +7,7 @@ import {
   UpdateFailed,
   DeleteFailed,
 } from "../utils/CustomError";
-import { errorCatch } from "../middlewares/errorMiddleware";
+import { errorCatch } from "../utils/errorCatch";
 import { successMessage } from "../utils/successMessage";
 
 class educationService {

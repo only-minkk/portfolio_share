@@ -10,7 +10,7 @@ import {
   GetFailed,
   UpdateFailed,
 } from "../utils/CustomError";
-import { errorCatch } from "../middlewares/errorMiddleware";
+import { errorCatch } from "../utils/errorCatch";
 // import { successMessage } from "./successMessage";
 
 class userAuthService {

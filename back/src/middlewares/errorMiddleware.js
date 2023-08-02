@@ -88,10 +88,4 @@ function errorMiddleware(error, req, res, next) {
   }
 }
 
-function errorCatch(data, err) {
-  if (!data) {
-    throw new err();
-  }
-}
-
-export { errorMiddleware, errorCatch };
+export { errorMiddleware };
