@@ -6,7 +6,7 @@ import {
   GetFailed,
   UpdateFailed,
   DeleteFailed,
-} from "../middlewares/CustomError";
+} from "../utils/CustomError";
 import { errorCatch } from "../middlewares/errorMiddleware";
 import { successMessage } from "../utils/successMessage";
 

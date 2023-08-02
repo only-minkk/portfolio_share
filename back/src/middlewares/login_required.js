@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { NotLoginUser, TokenNotFoundError } from "./CustomError";
+import { NotLoginUser, TokenNotFoundError } from "../utils/CustomError";
 import { errorCatch } from "./errorMiddleware";
 
 function login_required(req, res, next) {

@@ -1,4 +1,4 @@
-import { ValidationError } from "../middlewares/CustomError";
+import { ValidationError } from "../utils/CustomError";
 
 // 유효성 검사
 function validate(data, field) {

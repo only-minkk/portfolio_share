@@ -1,6 +1,6 @@
 import { Board } from "../db";
 import { v4 as uuidv4 } from "uuid";
-import { NotFound } from "../middlewares/CustomError";
+import { NotFound } from "../utils/CustomError";
 
 class boardService {
   static async addBoard({ title, content }) {

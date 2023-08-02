@@ -9,7 +9,7 @@ import {
   CreateFailed,
   GetFailed,
   UpdateFailed,
-} from "../middlewares/CustomError";
+} from "../utils/CustomError";
 import { errorCatch } from "../middlewares/errorMiddleware";
 // import { successMessage } from "./successMessage";
 
