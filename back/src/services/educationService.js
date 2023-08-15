@@ -45,35 +45,11 @@ class educationService {
     // db에서 찾지 못한 경우, 에러 메시지 반환
     errorCatch(education, NotFound);
 
-    // 모든 필드가 변경됐을 경우 save() 메서드로 한 번에 저장.
-    if (Object.keys(toUpdate).length === 3) {
-      education.school = toUpdate.school;
-      education.major = toUpdate.major;
-      education.position = toUpdate.position;
-
-      const newEducation = await education.save();
-
-      // save() 실패시 에러
-      errorCatch(newEducation, UpdateFailed);
-
-      return successMessage.updateSuccessMessage;
-    }
-
-    // 변경된 필드의 키 값을 fieldToUpdate 에 선언.
-    const fieldToUpdate = Object.keys(toUpdate);
-
-    // update() 메서드로 변경된 필드만 업데이트.
-    for (const field of fieldToUpdate) {
-      const newValue = toUpdate[field];
-      education = await Education.update({
-        id,
-        fieldToUpdate: field,
-        newValue,
-      });
-    }
+    // 변경된 값 업데이트
+    const updatedEducation = await Education.update(id, toUpdate);
 
     // update() 실패시 에러
-    errorCatch(education, UpdateFailed);
+    errorCatch(updatedEducation, UpdateFailed);
 
     return successMessage.updateSuccessMessage;
   }
