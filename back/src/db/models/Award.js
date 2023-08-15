@@ -16,16 +16,10 @@ class Award {
     return award;
   }
 
-  static async update({ id, fieldToUpdate, newValue }) {
-    const filter = { id: id };
-    const update = { [fieldToUpdate]: newValue };
-    const option = { returnOriginal: false };
-
-    const updatedAward = await AwardModel.findOneAndUpdate(
-      filter,
-      update,
-      option
-    );
+  static async update(id, toUpdate) {
+    const updatedAward = await AwardModel.findOneAndUpdate(id, toUpdate, {
+      returnOriginal: false,
+    });
     return updatedAward;
   }
 
@@ -36,4 +30,3 @@ class Award {
 }
 
 export { Award };
-

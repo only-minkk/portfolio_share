@@ -45,30 +45,11 @@ class awardService {
     // db에서 찾지 못한 경우, 에러 메시지 반환
     errorCatch(award, NotFound);
 
-    // 모든 필드가 변경됐을 경우 save() 메서드로 한 번에 저장.
-    if (Object.keys(toUpdate).length === 2) {
-      award.title = toUpdate.title;
-      award.description = toUpdate.description;
-
-      const newAward = await award.save();
-
-      // save() 실패시 에러.
-      errorCatch(newAward, UpdateFailed);
-
-      return successMessage.updateSuccessMessage;
-    }
-
-    // 변경된 필드의 키 값을 fieldToUpdate 에 선언.
-    const fieldToUpdate = Object.keys(toUpdate);
-
-    // update() 메서드로 변경된 필드만 업데이트
-    for (const field of fieldToUpdate) {
-      const newValue = toUpdate[field];
-      award = await Award.update({ id, fieldToUpdate: field, newValue });
-    }
+    // 변경된 값 업데이트
+    const updatedAward = await Award.update(id, toUpdate);
 
     // update() 실패시 에러
-    errorCatch(award, UpdateFailed);
+    errorCatch(updatedAward, UpdateFailed);
 
     return successMessage.updateSuccessMessage;
   }
