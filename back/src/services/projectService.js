@@ -45,31 +45,11 @@ class projectService {
     // 프로젝트 없으면 에러.
     errorCatch(project, NotFound);
 
-    // 모든 필드가 변경됐을 경우 save() 메서드로 한 번에 저장.
-    if (Object.keys(toUpdate).length === 4) {
-      for (const key in toUpdate) {
-        project[key] = toUpdate[key];
-      }
-
-      const newProject = await project.save();
-
-      // save() 실패시 에러.
-      errorCatch(newProject, UpdateFailed);
-
-      return successMessage.updateSuccessMessage;
-    }
-
-    // 변경된 필드의 키 값을 fieldToUpdate 에 선언.
-    const fieldToUpdate = Object.keys(toUpdate);
-
-    // update() 메서드로 변경된 필드만 업데이트.
-    for (const field of fieldToUpdate) {
-      const newValue = toUpdate[field];
-      project = await Project.update({ id, fieldToUpdate: field, newValue });
-    }
+    // 변경된 값 업데이트
+    const updatedProject = await Project.update(id, toUpdate);
 
     // update() 실패시 에러
-    errorCatch(project, UpdateFailed);
+    errorCatch(updatedProject, UpdateFailed);
 
     return successMessage.updateSuccessMessage;
   }
