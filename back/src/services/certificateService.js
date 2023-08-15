@@ -45,35 +45,11 @@ class certificateService {
     // db에서 찾지 못한 경우, 에러 메시지 반환
     errorCatch(certificate, NotFound);
 
-    // 모든 필드가 변경됐을 경우 save() 메서드로 한 번에 저장.
-    if (Object.keys(toUpdate).length === 3) {
-      certificate.title = toUpdate.title;
-      certificate.description = toUpdate.description;
-      certificate.when_date = toUpdate.when_date;
-
-      const newCertificate = await certificate.save();
-
-      // save() 실패시 에러.
-      errorCatch(newCertificate, UpdateFailed);
-
-      return successMessage.updateSuccessMessage;
-    }
-
-    // 변경된 필드의 키 값을 fieldToUpdate 에 선언.
-    const fieldToUpdate = Object.keys(toUpdate);
-
-    // 변경된 필드만 update() 메서드로 업데이트
-    for (const field of fieldToUpdate) {
-      const newValue = toUpdate[field];
-      certificate = await Certificate.update({
-        id,
-        fieldToUpdate: field,
-        newValue,
-      });
-    }
+    // 변경된 값 업데이트
+    const updatedCertificate = await Certificate.update(id, toUpdate);
 
     // update() 실패시 에러.
-    errorCatch(certificate, UpdateFailed);
+    errorCatch(updatedCertificate, UpdateFailed);
 
     return successMessage.updateSuccessMessage;
   }

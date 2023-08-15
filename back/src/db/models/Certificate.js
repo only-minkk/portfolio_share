@@ -16,15 +16,11 @@ class Certificate {
     return certificate;
   }
 
-  static async update({ id, fieldToUpdate, newValue }) {
-    const filter = { id: id };
-    const update = { [fieldToUpdate]: newValue };
-    const option = { returnOriginal: false };
-
+  static async update(id, toUpdate) {
     const updatedCertificate = await CertificateModel.findOneAndUpdate(
-      filter,
-      update,
-      option
+      id,
+      toUpdate,
+      { returnOriginal: false }
     );
     return updatedCertificate;
   }
