@@ -105,39 +105,14 @@ class userAuthService {
     // db에서 찾지 못한 경우, 에러 메시지 반환
     errorCatch(user, NoneUser);
 
-    // 변경 이메일이 이미 존재하는 이메일인지 확인 후, 존재한다면 에러.
-    const email = toUpdate.email;
-    const beingEmailUser = await User.findByEmail({ email });
-    errorCatch(!beingEmailUser, BeingEmail);
-
-    // 모든 필드가 변경됐을 경우 save()메서드로 한 번에 저장.
-    if (Object.keys(toUpdate).length == 3) {
-      user.name = toUpdate.name;
-      user.email = toUpdate.email;
-      user.description = toUpdate.description;
-      const newUser = await user.save();
-
-      // save() 실패시 에러.
-      errorCatch(newUser, UpdateFailed);
-
-      return newUser;
-      // return successMessage.updateSuccessMessage;
-    }
-
-    // 변경된 필드의 키 값을 fieldToUpdate 에 선언.
-    const fieldToUpdate = Object.keys(toUpdate);
-
-    // update()메서드로 변경된 필드만 업데이트.
-    for (const field of fieldToUpdate) {
-      const newValue = toUpdate[field];
-      user = await User.update({ user_id, fieldToUpdate: field, newValue });
-    }
+    // 변경된 값 업데이트
+    const updatedUser = await User.update(user_id, toUpdate);
 
     // update() 실패시 에러
-    errorCatch(user, UpdateFailed);
+    errorCatch(updatedUser, UpdateFailed);
 
-    return user;
-    // return successMessage.updateSuccessMessage;
+    // 프론트에서 반환된 data를 이용해 유저정보를 띄우기 때문에 변경된 데이터 반환
+    return updatedUser;
   }
 }
 
