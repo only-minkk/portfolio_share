@@ -18,7 +18,7 @@ class Education {
 
   static async update(id, toUpdate) {
     const updatedEducation = await EducationModel.findOneAndUpdate(
-      id,
+      { id: id },
       toUpdate,
       { returnOriginal: false }
     );

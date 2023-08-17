@@ -17,9 +17,13 @@ class Award {
   }
 
   static async update(id, toUpdate) {
-    const updatedAward = await AwardModel.findOneAndUpdate(id, toUpdate, {
-      returnOriginal: false,
-    });
+    const updatedAward = await AwardModel.findOneAndUpdate(
+      { id: id },
+      toUpdate,
+      {
+        returnOriginal: false,
+      }
+    );
     return updatedAward;
   }
 

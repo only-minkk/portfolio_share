@@ -22,9 +22,13 @@ class User {
   }
 
   static async update(user_id, toUpdate) {
-    const updatedUser = await UserModel.findOneAndUpdate(user_id, toUpdate, {
-      returnOriginal: false,
-    });
+    const updatedUser = await UserModel.findOneAndUpdate(
+      { id: user_id },
+      toUpdate,
+      {
+        returnOriginal: false,
+      }
+    );
     return updatedUser;
   }
 }

@@ -18,7 +18,7 @@ class Certificate {
 
   static async update(id, toUpdate) {
     const updatedCertificate = await CertificateModel.findOneAndUpdate(
-      id,
+      { id: id },
       toUpdate,
       { returnOriginal: false }
     );
