@@ -21,7 +21,7 @@
 
 2. 백엔드
 
-- Express 
+- Express
 - Mongodb, Mongoose
 
 ## 필수 서비스 기능
@@ -34,6 +34,7 @@
 - 네트워크 페이지를 통한 포트폴리오 공유 기능
 
 ### 기능 추가
+
 - CKEditor를 사용한 익명 게시물 작성 기능
 - Scroll 기능으로 게시물을 최근순으로 조회
 - 포트폴리오 목록 Pagination 기능
@@ -41,11 +42,29 @@
 - 로그인 실패 알림
 
 ### 기능 개선
+
 - 정보 삭제 기능
 - 게시물 삭제 기능
 - 회원 가입 성공 시 이를 알려주는 팝업 창
 - 회원 가입 중 이메일 중복 시 이를 알려주는 팝업 창
 
+### 시연
+
+- 로그인
+  <img src='./img/login.gif' title="Login">
+
+- 게시글 추가, 편집, 삭제
+  <img src='./img/uploadUpdated.gif' title="upload&update">
+  <img src='./img/uploadDelete.gif' title="upload&delete">
+
+- 네트워크 페이지
+  <img src='./img/network.gif' title="networkPage">
+
+- 놀이터 페이지
+  <img src='./img/annonymousBoard.gif' title="annonymousBoard">
+
+- 다크모드 & 로그아웃
+  <img src='./img/darkModeAndLogout.gif' title="darkModeAndLogout">
 
 ---
 
