@@ -6,24 +6,11 @@ import { Certificate } from "./models/Certificate";
 import { Project } from "./models/Project";
 import { Board } from "./models/Board";
 
-// let DB_URL;
-// if (process.env.NODE_ENV == "test") {
-//   DB_URL = process.env.MONGODB_TEST_URL;
-// } else {
-//   DB_URL =
-//     process.env.MONGODB_URL ||
-//     "MongoDB 서버 주소가 설정되지 않았습니다.\n./db/index.ts 파일을 확인해 주세요.";
-// }
-
 const DB_URL =
   process.env.NODE_ENV == "test"
     ? process.env.MONGODB_TEST_URL
     : process.env.MONGODB_URL ||
       "MongoDB 서버 주소가 설정되지 않았습니다.\n./db/index.ts 파일을 확인해 주세요.";
-
-// const DB_URL =
-//   process.env.MONGODB_URL ||
-//   "MongoDB 서버 주소가 설정되지 않았습니다.\n./db/index.ts 파일을 확인해 주세요.";
 
 mongoose.connect(DB_URL);
 const db = mongoose.connection;
