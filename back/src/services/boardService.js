@@ -2,7 +2,7 @@ import { Board } from "../db";
 import { v4 as uuidv4 } from "uuid";
 import { NotFound } from "../utils/CustomError";
 
-class boardService {
+class BoardService {
   static async addBoard({ title, content }) {
     const id = uuidv4();
 
@@ -52,4 +52,4 @@ class boardService {
   }
 }
 
-export { boardService };
+export { BoardService };

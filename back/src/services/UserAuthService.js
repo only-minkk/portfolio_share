@@ -12,7 +12,7 @@ import {
 } from "../utils/CustomError";
 import { errorCatch } from "../utils/errorCatch";
 
-class userAuthService {
+class UserAuthService {
   // 유저 등록
   static async addUser({ name, email, password }) {
     // 이메일 중복 확인
@@ -115,4 +115,4 @@ class userAuthService {
   }
 }
 
-export { userAuthService };
+export { UserAuthService };

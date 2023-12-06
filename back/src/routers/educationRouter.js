@@ -4,7 +4,7 @@ import {
   educationUpdateValidate,
 } from "../validation/educationValidation";
 import { tryCatchAsyncHandler } from "../utils/tryCatchAsyncHandler";
-import { educationService } from "../services/educationService";
+import { EducationService } from "../services/EducationService";
 
 const educationRouter = Router();
 
@@ -14,7 +14,7 @@ educationRouter.post(
   educationValidate,
   tryCatchAsyncHandler(async (req) => {
     const { user_id, school, major, position } = req.body;
-    const newEducation = await educationService.addEducation({
+    const newEducation = await EducationService.addEducation({
       user_id,
       school,
       major,
@@ -29,7 +29,7 @@ educationRouter.get(
   "/educations/:id",
   tryCatchAsyncHandler(async (req) => {
     const user_id = req.params.id;
-    const educations = await educationService.getEducations({ user_id });
+    const educations = await EducationService.getEducations({ user_id });
     return educations;
   })
 );
@@ -41,7 +41,7 @@ educationRouter.put(
   tryCatchAsyncHandler(async (req) => {
     const id = req.params.id;
     const toUpdate = req.body;
-    const updatedEducation = await educationService.setEducation({
+    const updatedEducation = await EducationService.setEducation({
       id,
       toUpdate,
     });
@@ -54,7 +54,7 @@ educationRouter.delete(
   "/educations/:id",
   tryCatchAsyncHandler(async (req) => {
     const id = req.params.id;
-    const deletedEducation = await educationService.deleteEducation({ id });
+    const deletedEducation = await EducationService.deleteEducation({ id });
     return deletedEducation;
   })
 );

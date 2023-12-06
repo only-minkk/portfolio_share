@@ -4,7 +4,7 @@ import {
   awardUpdateValidate,
 } from "../validation/awardValidation";
 import { tryCatchAsyncHandler } from "../utils/tryCatchAsyncHandler";
-import { awardService } from "../services/awardService";
+import { AwardService } from "../services/AwardService";
 
 const awardRouter = Router();
 
@@ -14,7 +14,7 @@ awardRouter.post(
   awardValidate,
   tryCatchAsyncHandler(async (req) => {
     const { user_id, title, description } = req.body;
-    const newAward = await awardService.addAward({
+    const newAward = await AwardService.addAward({
       user_id,
       title,
       description,
@@ -28,7 +28,7 @@ awardRouter.get(
   "/awards/:id",
   tryCatchAsyncHandler(async (req) => {
     const user_id = req.params.id;
-    const awards = await awardService.getAwards({ user_id });
+    const awards = await AwardService.getAwards({ user_id });
     return awards;
   })
 );
@@ -40,7 +40,7 @@ awardRouter.put(
   tryCatchAsyncHandler(async (req) => {
     const id = req.params.id;
     const toUpdate = req.body;
-    const updatedAward = await awardService.setAward({ id, toUpdate });
+    const updatedAward = await AwardService.setAward({ id, toUpdate });
     return updatedAward;
   })
 );
@@ -50,7 +50,7 @@ awardRouter.delete(
   "/awards/:id",
   tryCatchAsyncHandler(async (req) => {
     const id = req.params.id;
-    const deletedAward = await awardService.deleteAward({ id });
+    const deletedAward = await AwardService.deleteAward({ id });
     return deletedAward;
   })
 );

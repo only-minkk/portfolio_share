@@ -9,7 +9,7 @@ import {
 import { errorCatch } from "../utils/errorCatch";
 import { successMessage } from "../utils/successMessage";
 
-class projectService {
+class ProjectService {
   // 프로젝트 추가
   static async addProject({ user_id, title, description, from_date, to_date }) {
     // id 는 유니크 값 부여
@@ -71,4 +71,4 @@ class projectService {
   }
 }
 
-export { projectService };
+export { ProjectService };

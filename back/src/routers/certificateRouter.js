@@ -4,7 +4,7 @@ import {
   certificateUpdateValidate,
 } from "../validation/certificateValidation";
 import { tryCatchAsyncHandler } from "../utils/tryCatchAsyncHandler";
-import { certificateService } from "../services/certificateService";
+import { CertificateService } from "../services/CertificateService";
 
 const certificateRouter = Router();
 
@@ -14,7 +14,7 @@ certificateRouter.post(
   certificateValidate,
   tryCatchAsyncHandler(async (req) => {
     const { user_id, title, description, when_date } = req.body;
-    const newCertificate = await certificateService.addCertificate({
+    const newCertificate = await CertificateService.addCertificate({
       user_id,
       title,
       description,
@@ -29,7 +29,7 @@ certificateRouter.get(
   "/certificates/:id",
   tryCatchAsyncHandler(async (req) => {
     const user_id = req.params.id;
-    const certificates = await certificateService.getCertificates({ user_id });
+    const certificates = await CertificateService.getCertificates({ user_id });
     return certificates;
   })
 );
@@ -41,7 +41,7 @@ certificateRouter.put(
   tryCatchAsyncHandler(async (req) => {
     const id = req.params.id;
     const toUpdate = req.body;
-    const updatedCertificate = await certificateService.setCertificate({
+    const updatedCertificate = await CertificateService.setCertificate({
       id,
       toUpdate,
     });
@@ -54,7 +54,7 @@ certificateRouter.delete(
   "/certificates/:id",
   tryCatchAsyncHandler(async (req) => {
     const id = req.params.id;
-    const deletedCertificate = await certificateService.deleteCertificate({
+    const deletedCertificate = await CertificateService.deleteCertificate({
       id,
     });
     return deletedCertificate;

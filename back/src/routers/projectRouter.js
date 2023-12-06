@@ -4,7 +4,7 @@ import {
   projectUpdateValidate,
 } from "../validation/projectValidation";
 import { tryCatchAsyncHandler } from "../utils/tryCatchAsyncHandler";
-import { projectService } from "../services/projectService";
+import { ProjectService } from "../services/ProjectService";
 
 const projectRouter = Router();
 
@@ -14,7 +14,7 @@ projectRouter.post(
   projectValidate,
   tryCatchAsyncHandler(async (req) => {
     const { user_id, title, description, from_date, to_date } = req.body;
-    const newProject = await projectService.addProject({
+    const newProject = await ProjectService.addProject({
       user_id,
       title,
       description,
@@ -30,7 +30,7 @@ projectRouter.get(
   "/projects/:id",
   tryCatchAsyncHandler(async (req) => {
     const user_id = req.params.id;
-    const projects = await projectService.getProjects({ user_id });
+    const projects = await ProjectService.getProjects({ user_id });
     return projects;
   })
 );
@@ -42,7 +42,7 @@ projectRouter.put(
   tryCatchAsyncHandler(async (req) => {
     const id = req.params.id;
     const toUpdate = req.body;
-    const updatedProject = await projectService.setProject({ id, toUpdate });
+    const updatedProject = await ProjectService.setProject({ id, toUpdate });
     return updatedProject;
   })
 );
@@ -52,7 +52,7 @@ projectRouter.delete(
   "/projects/:id",
   tryCatchAsyncHandler(async (req) => {
     const id = req.params.id;
-    const deletedProject = await projectService.deleteProject({ id });
+    const deletedProject = await ProjectService.deleteProject({ id });
     return deletedProject;
   })
 );

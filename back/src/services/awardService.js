@@ -10,7 +10,7 @@ import {
 import { errorCatch } from "../utils/errorCatch";
 import { successMessage } from "../utils/successMessage";
 
-class awardService {
+class AwardService {
   // 수상 내역 등록
   static async addAward({ user_id, title, description }) {
     // id 는 유니크 값 부여
@@ -72,4 +72,4 @@ class awardService {
   }
 }
 
-export { awardService };
+export { AwardService };

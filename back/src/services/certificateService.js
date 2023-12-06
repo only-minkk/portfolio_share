@@ -10,7 +10,7 @@ import {
 import { errorCatch } from "../utils/errorCatch";
 import { successMessage } from "../utils/successMessage";
 
-class certificateService {
+class CertificateService {
   // 자격증 추가
   static async addCertificate({ user_id, title, description, when_date }) {
     // id 는 유니크 값 부여
@@ -72,4 +72,4 @@ class certificateService {
   }
 }
 
-export { certificateService };
+export { CertificateService };

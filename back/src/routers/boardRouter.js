@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { tryCatchAsyncHandler } from "../utils/tryCatchAsyncHandler";
-import { boardService } from "../services/boardService";
+import { BoardService } from "../services/BoardService";
 
 const boardRouter = Router();
 
@@ -11,7 +11,7 @@ boardRouter.post(
     const title = req.body.title;
     const content = req.body.content;
 
-    const newBoard = await boardService.addBoard({
+    const newBoard = await BoardService.addBoard({
       title,
       content,
     });
@@ -23,7 +23,7 @@ boardRouter.post(
 boardRouter.get(
   "/boards",
   tryCatchAsyncHandler(async () => {
-    const boards = await boardService.getBoards();
+    const boards = await BoardService.getBoards();
 
     return boards;
   })
@@ -35,7 +35,7 @@ boardRouter.put(
   tryCatchAsyncHandler(async (req) => {
     const id = req.params.id;
     const toUpdate = req.body;
-    const updatedBoard = await boardService.setBoard({ id, toUpdate });
+    const updatedBoard = await BoardService.setBoard({ id, toUpdate });
 
     return updatedBoard;
   })
@@ -46,7 +46,7 @@ boardRouter.delete(
   "/boards/:id",
   tryCatchAsyncHandler(async (req) => {
     const id = req.params.id;
-    const boards = await boardService.deleteBoard({ id });
+    const boards = await BoardService.deleteBoard({ id });
 
     return boards;
   })

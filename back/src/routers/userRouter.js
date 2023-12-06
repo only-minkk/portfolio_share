@@ -6,7 +6,7 @@ import {
   userUpdateValidation,
 } from "../validation/userValidation";
 import { tryCatchAsyncHandler } from "../utils/tryCatchAsyncHandler";
-import { userAuthService } from "../services/userService";
+import { UserAuthService } from "../services/UserAuthService";
 
 const userAuthRouter = Router();
 
@@ -17,7 +17,7 @@ userAuthRouter.post(
   tryCatchAsyncHandler(async (req) => {
     const { name, email, password } = req.body;
 
-    const newUser = await userAuthService.addUser({
+    const newUser = await UserAuthService.addUser({
       name,
       email,
       password,
@@ -32,7 +32,7 @@ userAuthRouter.post(
   validateLoginUser,
   tryCatchAsyncHandler(async (req) => {
     const { email, password } = req.body;
-    const user = await userAuthService.getUser({ email, password });
+    const user = await UserAuthService.getUser({ email, password });
     return user;
   })
 );
@@ -42,7 +42,7 @@ userAuthRouter.get(
   "/userlist",
   login_required,
   tryCatchAsyncHandler(async () => {
-    const users = await userAuthService.getUsers();
+    const users = await UserAuthService.getUsers();
     return users;
   })
 );
@@ -54,7 +54,7 @@ userAuthRouter.get(
   tryCatchAsyncHandler(async (req) => {
     // login_required 미들웨어를 통해 토큰에서 userId 추출.
     const user_id = req.currentUserId;
-    const currentUserInfo = await userAuthService.getUserInfo({ user_id });
+    const currentUserInfo = await UserAuthService.getUserInfo({ user_id });
     return currentUserInfo;
   })
 );
@@ -67,7 +67,7 @@ userAuthRouter.put(
   tryCatchAsyncHandler(async (req) => {
     const user_id = req.params.id;
     const toUpdate = req.body;
-    const updatedUser = await userAuthService.setUser({ user_id, toUpdate });
+    const updatedUser = await UserAuthService.setUser({ user_id, toUpdate });
     return updatedUser;
   })
 );
@@ -78,7 +78,7 @@ userAuthRouter.get(
   login_required,
   tryCatchAsyncHandler(async (req) => {
     const user_id = req.params.id;
-    const currentUserInfo = await userAuthService.getUserInfo({ user_id });
+    const currentUserInfo = await UserAuthService.getUserInfo({ user_id });
     return currentUserInfo;
   })
 );

@@ -10,7 +10,7 @@ import {
 import { errorCatch } from "../utils/errorCatch";
 import { successMessage } from "../utils/successMessage";
 
-class educationService {
+class EducationService {
   // 학력 추가
   static async addEducation({ user_id, school, major, position }) {
     // id 는 유니크 값 부여
@@ -72,4 +72,4 @@ class educationService {
   }
 }
 
-export { educationService };
+export { EducationService };
