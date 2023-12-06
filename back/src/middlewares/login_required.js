@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { TokenNotFoundError } from "../utils/CustomError";
+import { NotLoginUser, TokenNotFoundError } from "../utils/CustomError";
 import { errorCatch } from "../utils/errorCatch";
 
 function login_required(req, res, next) {
@@ -12,7 +12,7 @@ function login_required(req, res, next) {
   if (!userToken) {
     console.log("서비스 사용 요청이 있습니다.하지만, Authorization 토큰: 없음");
   }
-  errorCatch(userToken, TokenNotFoundError);
+  errorCatch(userToken, NotLoginUser);
 
   // 해당 token 이 정상적인 token인지 확인 -> 토큰에 담긴 user_id 정보 추출
   try {
