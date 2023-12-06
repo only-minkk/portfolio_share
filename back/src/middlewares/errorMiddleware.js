@@ -23,13 +23,6 @@ function errorMiddleware(error, req, res, next) {
           message: error.message,
         },
       });
-    case "NotLoginUser":
-      return res.status(401).json({
-        error: {
-          name: error.name,
-          message: error.message,
-        },
-      });
     case "TokenNotFoundError":
       return res.status(401).json({
         error: {

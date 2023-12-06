@@ -126,8 +126,8 @@ describe("userRouter 테스트", () => {
     expect(response.status).toBe(401);
     expect(response.body).toEqual({
       error: {
-        name: "NotLoginUser",
-        message: "로그인한 유저만 사용할 수 있는 서비스입니다.",
+        name: "TokenNotFoundError",
+        message: "정상적인 토큰이 아닙니다. 다시 한 번 확인해 주세요.",
       },
     });
   });
