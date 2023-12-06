@@ -15,7 +15,7 @@ function validateCreateUser(req, res, next) {
 
   validate(name, "name", userFields);
   validate(email, "email", userFields);
-  validateEmail(email, userFields);
+  validateEmail(email);
   validate(password, "password", userFields);
 
   next();
