@@ -8,84 +8,31 @@ function errorMiddleware(error, req, res, next) {
     `${"-".repeat(33)}\n`
   );
 
+  const errorResponse = (status, error) =>
+    res.status(status).json({
+      error: {
+        name: error.name,
+        message: error.message,
+      },
+    });
+
   switch (error.name) {
     case "ValidationError":
-      return res.status(400).json({
-        error: {
-          name: error.name,
-          message: error.message,
-        },
-      });
+      return errorResponse(400, error);
     case "BeingEmail":
-      return res.status(409).json({
-        error: {
-          name: error.name,
-          message: error.message,
-        },
-      });
+      return errorResponse(409, error);
     case "NotLoginUser":
-      return res.status(401).json({
-        error: {
-          name: error.name,
-          message: error.message,
-        },
-      });
     case "TokenNotFoundError":
-      return res.status(401).json({
-        error: {
-          name: error.name,
-          message: error.message,
-        },
-      });
     case "Unauthorized":
-      return res.status(401).json({
-        error: {
-          name: error.name,
-          message: error.message,
-        },
-      });
+      return errorResponse(401, error);
     case "NoneUser":
-      return res.status(404).json({
-        error: {
-          name: error.name,
-          message: error.message,
-        },
-      });
     case "NotFound":
-      return res.status(404).json({
-        error: {
-          name: error.name,
-          message: error.message,
-        },
-      });
+      return errorResponse(404, error);
     case "CreateFailed":
-      return res.status(500).json({
-        error: {
-          name: error.name,
-          message: error.message,
-        },
-      });
     case "GetFailed":
-      return res.status(500).json({
-        error: {
-          name: error.name,
-          message: error.message,
-        },
-      });
     case "UpdateFailed":
-      return res.status(500).json({
-        error: {
-          name: error.name,
-          message: error.message,
-        },
-      });
     case "DeleteFailed":
-      return res.status(500).json({
-        error: {
-          name: error.name,
-          message: error.message,
-        },
-      });
+      return errorResponse(500, error);
     default:
       return res.status(400).send(error.message);
   }
