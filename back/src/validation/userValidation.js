@@ -1,5 +1,5 @@
-import { validate } from "../utils/validation";
-import { userFields } from "../utils/fieldConstants";
+import { validate } from "../utils/validation.js";
+import { userFields } from "../utils/fieldConstants.js";
 
 // 이메일 유효성 검사
 function validateEmail(email) {

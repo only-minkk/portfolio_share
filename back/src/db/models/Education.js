@@ -1,4 +1,4 @@
-import { EducationModel } from "../schemas/education";
+import { EducationModel } from "../schemas/education.js";
 
 class Education {
   static async create({ newEducation }) {

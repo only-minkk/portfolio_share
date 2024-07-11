@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
-import { NotLoginUser, TokenNotFoundError } from "../utils/CustomError";
-import { errorCatch } from "../utils/errorCatch";
+import { NotLoginUser, TokenNotFoundError } from "../utils/CustomError.js";
+import { errorCatch } from "../utils/errorCatch.js";
 
 function login_required(req, res, next) {
   // request 헤더로부터 authorization bearer 토큰을 받음.

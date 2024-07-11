@@ -2,9 +2,9 @@ import { Router } from "express";
 import {
   educationValidate,
   educationUpdateValidate,
-} from "../validation/educationValidation";
-import { tryCatchAsyncHandler } from "../utils/tryCatchAsyncHandler";
-import { EducationService } from "../services/EducationService";
+} from "../validation/educationValidation.js";
+import { tryCatchAsyncHandler } from "../utils/tryCatchAsyncHandler.js";
+import { EducationService } from "../services/EducationService.js";
 
 const educationRouter = Router();
 

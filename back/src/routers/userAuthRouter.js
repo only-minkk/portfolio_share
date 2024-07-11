@@ -1,12 +1,12 @@
 import { Router } from "express";
-import { login_required } from "../middlewares/login_required";
+import { login_required } from "../middlewares/login_required.js";
 import {
   validateCreateUser,
   validateLoginUser,
   userUpdateValidation,
-} from "../validation/userValidation";
-import { tryCatchAsyncHandler } from "../utils/tryCatchAsyncHandler";
-import { UserAuthService } from "../services/UserAuthService";
+} from "../validation/userValidation.js";
+import { tryCatchAsyncHandler } from "../utils/tryCatchAsyncHandler.js";
+import { UserAuthService } from "../services/UserAuthService.js";
 
 const userAuthRouter = Router();
 

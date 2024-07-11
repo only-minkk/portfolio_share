@@ -1,5 +1,5 @@
-import { validate } from "../utils/validation";
-import { awardFields } from "../utils/fieldConstants";
+import { validate } from "../utils/validation.js";
+import { awardFields } from "../utils/fieldConstants.js";
 
 // 수상내역 추가 유효성 검사
 function awardValidate(req, res, next) {

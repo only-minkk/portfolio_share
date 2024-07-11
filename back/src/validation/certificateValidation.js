@@ -1,5 +1,5 @@
-import { validate } from "../utils/validation";
-import { certificateFields } from "../utils/fieldConstants";
+import { validate } from "../utils/validation.js";
+import { certificateFields } from "../utils/fieldConstants.js";
 
 // 자격증 추가 유효성 검사
 function certificateValidate(req, res, next) {

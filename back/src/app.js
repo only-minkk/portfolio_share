@@ -1,13 +1,13 @@
 import cors from "cors";
 import express from "express";
-import { userAuthRouter } from "./routers/userRouter";
-import { educationRouter } from "./routers/educationRouter";
-import { awardRouter } from "./routers/awardRouter";
-import { certificateRouter } from "./routers/certificateRouter";
-import { projectRouter } from "./routers/projectRouter";
-import { boardRouter } from "./routers/boardRouter";
-import { likeRouter } from "./routers/likeRouter";
-import { errorMiddleware } from "./middlewares/errorMiddleware";
+import { userAuthRouter } from "./routers/userAuthRouter.js";
+import { educationRouter } from "./routers/educationRouter.js";
+import { awardRouter } from "./routers/awardRouter.js";
+import { certificateRouter } from "./routers/certificateRouter.js";
+import { projectRouter } from "./routers/projectRouter.js";
+import { boardRouter } from "./routers/boardRouter.js";
+import { likeRouter } from "./routers/likeRouter.js";
+import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 
 const app = express();
 

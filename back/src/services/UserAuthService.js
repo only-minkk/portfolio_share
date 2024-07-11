@@ -1,4 +1,4 @@
-import { User } from "../db"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
+import { User } from "../db/index.js"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
@@ -9,8 +9,8 @@ import {
   CreateFailed,
   GetFailed,
   UpdateFailed,
-} from "../utils/CustomError";
-import { errorCatch } from "../utils/errorCatch";
+} from "../utils/CustomError.js";
+import { errorCatch } from "../utils/errorCatch.js";
 
 class UserAuthService {
   // 유저 등록

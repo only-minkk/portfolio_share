@@ -2,9 +2,9 @@ import { Router } from "express";
 import {
   certificateValidate,
   certificateUpdateValidate,
-} from "../validation/certificateValidation";
-import { tryCatchAsyncHandler } from "../utils/tryCatchAsyncHandler";
-import { CertificateService } from "../services/CertificateService";
+} from "../validation/certificateValidation.js";
+import { tryCatchAsyncHandler } from "../utils/tryCatchAsyncHandler.js";
+import { CertificateService } from "../services/CertificateService.js";
 
 const certificateRouter = Router();
 

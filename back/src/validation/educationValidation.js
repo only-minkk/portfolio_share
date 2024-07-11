@@ -1,5 +1,5 @@
-import { validate } from "../utils/validation";
-import { educationFields } from "../utils/fieldConstants";
+import { validate } from "../utils/validation.js";
+import { educationFields } from "../utils/fieldConstants.js";
 
 // 학력 추가 유효성 검사
 function educationValidate(req, res, next) {

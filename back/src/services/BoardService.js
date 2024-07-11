@@ -1,6 +1,6 @@
-import { Board } from "../db";
+import { Board } from "../db/index.js";
 import { v4 as uuidv4 } from "uuid";
-import { NotFound } from "../utils/CustomError";
+import { NotFound } from "../utils/CustomError.js";
 
 class BoardService {
   static async addBoard({ title, content }) {

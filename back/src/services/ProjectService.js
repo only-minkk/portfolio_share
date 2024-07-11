@@ -1,13 +1,13 @@
-import { Project } from "../db";
+import { Project } from "../db/index.js";
 import { v4 as uuidv4 } from "uuid";
 import {
   NotFound,
   GetFailed,
   UpdateFailed,
   DeleteFailed,
-} from "../utils/CustomError";
-import { errorCatch } from "../utils/errorCatch";
-import { successMessage } from "../utils/successMessage";
+} from "../utils/CustomError.js";
+import { errorCatch } from "../utils/errorCatch.js";
+import { successMessage } from "../utils/successMessage.js";
 
 class ProjectService {
   // 프로젝트 추가

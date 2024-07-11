@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { tryCatchAsyncHandler } from "../utils/tryCatchAsyncHandler";
-import { LikeModel } from "../db/schemas/like";
+import { tryCatchAsyncHandler } from "../utils/tryCatchAsyncHandler.js";
+import { LikeModel } from "../db/schemas/like.js";
 
 const likeRouter = Router();
 

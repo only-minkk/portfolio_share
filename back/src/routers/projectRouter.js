@@ -2,9 +2,9 @@ import { Router } from "express";
 import {
   projectValidate,
   projectUpdateValidate,
-} from "../validation/projectValidation";
-import { tryCatchAsyncHandler } from "../utils/tryCatchAsyncHandler";
-import { ProjectService } from "../services/ProjectService";
+} from "../validation/projectValidation.js";
+import { tryCatchAsyncHandler } from "../utils/tryCatchAsyncHandler.js";
+import { ProjectService } from "../services/ProjectService.js";
 
 const projectRouter = Router();
 

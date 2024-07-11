@@ -2,9 +2,9 @@ import { Router } from "express";
 import {
   awardValidate,
   awardUpdateValidate,
-} from "../validation/awardValidation";
-import { tryCatchAsyncHandler } from "../utils/tryCatchAsyncHandler";
-import { AwardService } from "../services/AwardService";
+} from "../validation/awardValidation.js";
+import { tryCatchAsyncHandler } from "../utils/tryCatchAsyncHandler.js";
+import { AwardService } from "../services/AwardService.js";
 
 const awardRouter = Router();
 

@@ -1,5 +1,5 @@
-import { validate } from "../utils/validation";
-import { projectFields } from "../utils/fieldConstants";
+import { validate } from "../utils/validation.js";
+import { projectFields } from "../utils/fieldConstants.js";
 
 // 프로젝트 추가 유효성 검사
 function projectValidate(req, res, next) {

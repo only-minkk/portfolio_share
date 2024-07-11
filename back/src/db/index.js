@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
-import { User } from "./models/User";
-import { Education } from "./models/Education";
-import { Award } from "./models/Award";
-import { Certificate } from "./models/Certificate";
-import { Project } from "./models/Project";
-import { Board } from "./models/Board";
+import { User } from "./models/User.js";
+import { Education } from "./models/Education.js";
+import { Award } from "./models/Award.js";
+import { Certificate } from "./models/Certificate.js";
+import { Project } from "./models/Project.js";
+import { Board } from "./models/Board.js";
 
 const DB_URL =
   process.env.NODE_ENV == "test"
