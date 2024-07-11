@@ -1,8 +1,10 @@
 import axios from "axios";
 
 const backendPortNumber = "5001";
+// const serverUrl =
+//   "http://" + window.location.hostname + ":" + backendPortNumber + "/";
 const serverUrl =
-  "http://" + window.location.hostname + ":" + backendPortNumber + "/";
+  "https://port-0-portfolio-share-lyft4b93ef6ca26e.sel5.cloudtype.app/";
 
 async function get(endpoint, params = "") {
   console.log(
