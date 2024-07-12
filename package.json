@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "start": "concurrently \"npm run start-back\" \"npm run start-front\"",
-    "start-back": "cd back && npm start",
-    "start-front": "cd front && npm start"
+    "start-back": "cd back & npm i & npm start",
+    "start-front": "cd front& npm i  & npm start"
   },
   "dependencies": {
     "concurrently": "^8.2.2",
